@@ -7,8 +7,8 @@ import { HttpClient } from '@angular/common/http';
 export class LoginService {
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string) {
-    const loginData = { username, password };
+  login(email: string, password: string) {
+    const loginData = { email, password };
     return this.http.post('/api/login', loginData);
   }
 }
