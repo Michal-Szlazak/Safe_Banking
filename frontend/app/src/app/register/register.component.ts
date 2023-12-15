@@ -1,43 +1,48 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { RegisterService } from "../shared/services/register.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {
+  AbstractControl,
+  AbstractControlOptions,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators
+} from "@angular/forms";
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html'
+  templateUrl: './register.component.html',
 })
-export class RegisterComponent {
-
+export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  constructor(private registerService: RegisterService, private fb: FormBuilder) {
 
+  constructor(private registerService: RegisterService, private fb: FormBuilder) {
     this.registerForm = this.fb.group({
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', Validators.required]
-    }, { validator: this.passwordMatchValidator });
+      name: ['', [Validators.required, Validators.maxLength(20)]],
+      surname: ['', [Validators.required, Validators.maxLength(20)]],
+      email: ['', [Validators.required, Validators.maxLength(20), Validators.email]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
+    }, { validator: this.passwordMatchValidator } as AbstractControlOptions);
   }
 
-  registerData = {
-    name: '',
-    surname: '',
-    email: '',
-    phoneNumber: '',
-    password: '',
-    confirmPassword: ''
-  };
+  ngOnInit(): void {
+    // If you have any initialization logic, you can place it here
+  }
 
   onSubmit() {
+    if (this.registerForm.valid) {
+      // Call your registration service and handle the submission
+      const formData = this.registerForm.value;
 
-  }
-
-  private passwordMatchValidator(formGroup: FormGroup) {
-    const password = formGroup.get('password').value;
-    const confirmPassword = formGroup.get('confirmPassword').value;
-
-    if (password !== confirmPassword) {
-      formGroup.get('confirmPassword').setErrors({ mismatch: true });
-    } else {
-      formGroup.get('confirmPassword').setErrors(null);
     }
   }
+
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordMismatch: true };
+  }
 }
+
