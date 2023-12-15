@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginService } from "../shared/services/login.service";
 import {AbstractControlOptions, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {RegisterService} from "../shared/services/register.service";
 
 @Component({
   selector: 'app-login',
@@ -20,8 +19,7 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
-      this.loginService.login(email, password);
+      this.loginService.login(this.loginForm.value);
     }
   }
 }

@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     if (this.registerForm.valid) {
       // Call your registration service and handle the submission
-      const formData = this.registerForm.value;
+      this.registerService.register(this.registerForm.value)
 
     }
   }
