@@ -14,8 +14,8 @@ spring:
         registration:
           keycloak:
             provider: keycloak
-            client-id: SafeBankAppGateway
-            client-secret: 4WtyLPeWhfLNkHGsTarf7peROsqQMnLG
+            client-id: safe-bank-app-cli
+            client-secret: KViUEvGQSgOzW2tLRJxSUYY4HyGWhqbP
             authorization-grant-type: authorization_code
             redirect-uri: ${keycloak-client.server-url}/login/oauth2/code/keycloak
             scope: openid
@@ -38,8 +38,8 @@ keycloak-client:
 
 keycloak:
   master-realm: master
-  client-id: SafeBankAppGateway
-  client-secret: 4WtyLPeWhfLNkHGsTarf7peROsqQMnLG
+  client-id: admin-cli
+  client-secret: po1Ou2xlvvIMxMRH6oisgsFFZcrOvxo3
   scope: openid
   authorization-grant-type: password
   user-info-uri: http://localhost:8080/realms/SafeBankApp/protocol/openid-connect/userinfo

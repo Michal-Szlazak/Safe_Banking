@@ -2,6 +2,7 @@ package safe.bank.app.authservice.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import safe.bank.app.authservice.controller_advice.exceptions.UserCreationException;
 import safe.bank.app.authservice.dtos.UserLoginDTO;
 import safe.bank.app.authservice.dtos.UserPostDTO;
@@ -16,31 +17,29 @@ import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
-public class KeycloakController {
+@RequestMapping("/user/public")
+public class UserPublicController {
 
-    private final Logger logger = LoggerFactory.getLogger(KeycloakController.class);
-
-    private final KeycloakService restService;
+    private final KeycloakService keycloakService;
 
     @GetMapping("/roles")
     public List<String> getRoles(@RequestHeader("UserId") String userId) {
-        return restService.getRoles(userId);
+        return keycloakService.getRoles(userId);
     }
-
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public String login(@RequestBody UserLoginDTO userLoginDTO) {
-        return restService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword());
-    }
-
-    @PostMapping(value = "/logout", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void logout(@RequestParam(value = "refresh_token", name = "refresh_token") String userId) {
-        restService.logout(userId);
+        return keycloakService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword());
     }
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public void register(@Valid @RequestBody UserPostDTO userPostDTO) throws UserCreationException {
-        restService.register(userPostDTO);
+        keycloakService.register(userPostDTO);
+    }
+
+    @PostMapping(value = "/refreshToken")
+    public String refreshJwtToken(@RequestHeader(name = "refresh_token") String refreshToken) {
+        return keycloakService.refreshJwtToken(refreshToken);
     }
 }
