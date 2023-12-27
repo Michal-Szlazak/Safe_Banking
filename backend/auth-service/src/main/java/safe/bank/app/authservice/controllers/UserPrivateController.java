@@ -10,7 +10,7 @@ import safe.bank.app.authservice.services.KeycloakService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user/private")
+@RequestMapping("/auth/user/private")
 public class UserPrivateController {
 
     private final KeycloakService keycloakService;
