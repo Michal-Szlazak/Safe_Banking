@@ -16,8 +16,8 @@ public class RoutingConfig {
                         .uri("http://bank-service:8083")
                 )
                 .route("auth-service", r -> r
-                        .path("/api/auth/**")
-                        .uri("http://auth-service:8082")
+                        .path("/auth/**")
+                        .uri("http://auth-service:8082/")
                 )
                 .build();
     }
