@@ -29,7 +29,7 @@ public class UserPublicController {
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public String login(@RequestBody UserLoginDTO userLoginDTO) {
-        return keycloakService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword());
+        return keycloakService.login(userLoginDTO.getEmail(), userLoginDTO.getPassword());
     }
 
     @PostMapping("/register")

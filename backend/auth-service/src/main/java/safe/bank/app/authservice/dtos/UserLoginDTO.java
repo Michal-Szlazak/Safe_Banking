@@ -9,6 +9,6 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class UserLoginDTO {
 
-    String username;
+    String email;
     String password;
 }
