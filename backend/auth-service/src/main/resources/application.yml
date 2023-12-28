@@ -30,9 +30,9 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: ${keycloak-client.server-url}/realms/${keycloak-client.realm}/protocol/openid-connect/certs
-          issuer-uri: http://localhost:8080/realms/SafeBankApp
+          issuer-uri: http://keycloak:8080/realms/SafeBankApp
 keycloak-client:
-  server-url: http://localhost:8080
+  server-url: http://keycloak:8080
   realm: SafeBankApp
 
 
@@ -42,10 +42,10 @@ keycloak:
   client-secret: 0G1ce0uHFDEJRcVD3qG4pDlj3YF8ZDTW
   scope: openid
   authorization-grant-type: password
-  user-info-uri: http://localhost:8080/realms/SafeBankApp/protocol/openid-connect/userinfo
-  token-uri: http://localhost:8080/realms/SafeBankApp/protocol/openid-connect/token
-  jwk-set-uri: http://localhost:8080/realms/SafeBankApp/protocol/openid-connect/certs
-  server-url: http://localhost:8080/
+  user-info-uri: http://keycloak:8080/realms/SafeBankApp/protocol/openid-connect/userinfo
+  token-uri: http://keycloak:8080/realms/SafeBankApp/protocol/openid-connect/token
+  jwk-set-uri: http://keycloak:8080/realms/SafeBankApp/protocol/openid-connect/certs
+  server-url: http://keycloak:8080/
   realm: SafeBankApp
   admin: admin
   admin-password: admin
