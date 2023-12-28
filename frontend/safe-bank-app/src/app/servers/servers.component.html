@@ -1,0 +1,33 @@
+<label>{{ serverName }}</label>
+<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+       id="server-name"
+       type="text"
+       placeholder="Username"
+        (input)="onUpdateServerName($event)">
+<input
+  type="text"
+  class="appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+  [(ngModel)]="serverName">
+<button [class]="allowNewServer ? 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+        : 'bg-gray-300 cursor-not-allowed py-2 px-4 rounded'"
+        [disabled]="!allowNewServer"
+        (click)="onCreateServer()">
+  Add Server
+</button>
+<!--<p>{{serverCreationStatus}}</p>-->
+<p *ngIf="serverCreated">Server was created, server name is {{serverName}}</p>
+<app-server *ngFor="let server of servers">
+
+</app-server>
+
+<!--<input-->
+<!--  type="text"-->
+<!--  class="appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"-->
+<!--  [(ngModel)]="username">-->
+<!--<button [class]="username.length != 0 ? 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'-->
+<!--        : 'bg-gray-300 cursor-not-allowed py-2 px-4 rounded'"-->
+<!--        [disabled]="!allowNewServer"-->
+<!--        (click)="onAddUser()">-->
+<!--  Add User-->
+<!--</button>-->
+<!--<p>{{username}}</p>-->

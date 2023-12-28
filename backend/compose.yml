@@ -1,0 +1,83 @@
+version: '3.8'
+
+x-service: &service
+  environment:
+    - SPRING_PROFILES_ACTIVE=dev
+
+services:
+
+  bank-service:
+    build: bank-service
+    ports:
+      - '8083:8083'
+    networks:
+      - net-apiGw-bankServ
+
+  auth-service:
+    <<: *service
+    build: auth-service
+    ports:
+      - '8082:8082'
+    networks:
+      - net-apiGw-authServ
+      - net-authServ-keycloak
+
+  api-gateway:
+    <<: *service
+    build: gateway-service
+    ports:
+      - '8081:8081'
+    networks:
+      - net-apiGw-bankServ
+      - net-apiGw-authServ
+
+  postgres:
+    container_name: postgres
+    image: postgres:14.7
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5100:5432'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - custom-keycloak
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: keycloak
+      DB_SCHEMA: keycloak
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+    volumes:
+     - ./keycloak-config/realm-export.json:/opt/keycloak/data/import/realm.json
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - custom-keycloak
+      - net-authServ-keycloak
+    command:
+     - start-dev
+     - --import-realm
+
+volumes:
+  postgres:
+    driver: local
+
+networks:
+  net-apiGw-bankServ:
+  net-apiGw-authServ:
+  net-authServ-keycloak:
+  custom-keycloak:
+    name: custom-keycloak
+    driver: bridge
