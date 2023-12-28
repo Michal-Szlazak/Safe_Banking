@@ -7,6 +7,18 @@ logging:
     org.hibernate: ERROR
 
 spring:
+
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+
   security:
     oauth2:
       client:
