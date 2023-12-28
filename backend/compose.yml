@@ -30,6 +30,7 @@ services:
     networks:
       - net-apiGw-bankServ
       - net-apiGw-authServ
+      - net-apiGw-keycloak
 
   postgres:
     container_name: postgres
@@ -66,6 +67,7 @@ services:
     networks:
       - custom-keycloak
       - net-authServ-keycloak
+      - net-apiGw-keycloak
     command:
      - start-dev
      - --import-realm
@@ -78,6 +80,7 @@ networks:
   net-apiGw-bankServ:
   net-apiGw-authServ:
   net-authServ-keycloak:
+  net-apiGw-keycloak:
   custom-keycloak:
     name: custom-keycloak
     driver: bridge
