@@ -18,6 +18,7 @@ spring:
             allowedMethods:
               - GET
               - POST
+              - OPTIONS
 
   security:
     oauth2:
