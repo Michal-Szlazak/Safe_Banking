@@ -43,6 +43,9 @@
                       {{ !loginForm.invalid ? 'bg-indigo-500 hover:bg-indigo-700 text-white' : 'bg-gray-300 cursor-not-allowed text-gray-500' }}">
           Sign in</button>
       </div>
+      <div *ngIf="loginError" class="error-message">
+        Login failed. Please check your credentials and try again.
+      </div>
     </form>
 
     <p class="mt-10 text-center text-sm text-gray-500">

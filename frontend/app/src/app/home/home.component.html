@@ -1,1 +1,7 @@
-<p>home works!</p>
+<div *ngIf="isLoggedIn()">
+  Welcome to the dashboard!
+</div>
+<div *ngIf="!isLoggedIn()">
+  <!-- Content for non-logged-in users -->
+  Please log in to access the dashboard.
+</div>
