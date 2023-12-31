@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20), onlyLettersValidator]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20), onlyLettersValidator]],
       email: ['', [Validators.required, Validators.maxLength(20), Validators.email]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20), entropyValidator]],
       confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
     }, { validator: this.passwordMatchValidator } as AbstractControlOptions);

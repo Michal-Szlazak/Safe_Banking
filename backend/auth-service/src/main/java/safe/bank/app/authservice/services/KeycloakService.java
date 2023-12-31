@@ -8,17 +8,18 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import reactor.core.publisher.Mono;
 import safe.bank.app.authservice.config.RealmResourceBuilder;
 import safe.bank.app.authservice.controller_advice.exceptions.UserCreationException;
+import safe.bank.app.authservice.dtos.BankUserDTO;
 import safe.bank.app.authservice.dtos.UserPostDTO;
 import safe.bank.app.authservice.entities.ErrorResponseEntity;
+import safe.bank.app.authservice.mappers.BankUserMapper;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,6 +29,8 @@ public class KeycloakService {
 
     private final RestTemplate restTemplate;
     private final RealmResource realmResource;
+    private final BankService bankService;
+    private final BankUserMapper bankUserMapper;
 
     @Value("${keycloak.token-uri}")
     private String keycloakTokenUri;
@@ -41,8 +44,11 @@ public class KeycloakService {
     @Value("${keycloak.scope}")
     private String scope;
 
-    public KeycloakService(RestTemplate restTemplate, RealmResourceBuilder realmResourceBuilder) {
+    public KeycloakService(RestTemplate restTemplate, RealmResourceBuilder realmResourceBuilder,
+                           BankService bankService, BankUserMapper bankUserMapper) {
         this.restTemplate = restTemplate;
+        this.bankService = bankService;
+        this.bankUserMapper = bankUserMapper;
         realmResource = realmResourceBuilder.realmResource();
     }
 
@@ -74,8 +80,11 @@ public class KeycloakService {
                 ErrorResponseEntity responseEntity = response.readEntity(ErrorResponseEntity.class);
                 throw new UserCreationException(responseEntity.getErrorMessage());
             }
+
             String userId = extractUserIdFromResponse(response);
             assignRoles(userId, List.of("USER"));
+
+            registerBankUser(userPostDTO, userId); //What if system fails to create user?
         }
     }
 
@@ -155,4 +164,17 @@ public class KeycloakService {
         List<String> parts = Arrays.stream(location.split("/")).toList();
         return parts.get(parts.size() - 1);
     }
+
+    private HttpStatusCode registerBankUser(UserPostDTO userPostDTO, String userId) {
+
+        BankUserDTO bankUserDTO = bankUserMapper.fromUserToBankUserDTO(userPostDTO);
+        bankUserDTO.setUserId(UUID.fromString(userId));
+
+        Mono<ResponseEntity<String>> responseMono = bankService.createBankUser(bankUserDTO);
+
+        return responseMono
+                .map(ResponseEntity::getStatusCode)
+                .block();
+    }
+
 }

@@ -13,6 +13,7 @@ services:
     networks:
       - net-apiGw-bankServ
       - net-bankdb-bankServ
+      - net-authServ-bankServ
 
   auth-service:
     <<: *service
@@ -22,6 +23,7 @@ services:
     networks:
       - net-apiGw-authServ
       - net-authServ-keycloak
+      - net-authServ-bankServ
 
   api-gateway:
     <<: *service
@@ -42,7 +44,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - '5100:5432'
+      - '5432:5432'
     volumes:
       - postgres:/var/lib/postgresql/data
     networks:
@@ -57,7 +59,7 @@ services:
       POSTGRES_USER: sa
       POSTGRES_PASSWORD: sa
     ports:
-      - '5433:5433'
+      - '5433:5432'
     volumes:
       - bankdb:/var/lib/postgresql/data
     networks:
@@ -100,6 +102,7 @@ networks:
   net-authServ-keycloak:
   net-apiGw-keycloak:
   net-bankdb-bankServ:
+  net-authServ-bankServ:
   custom-keycloak:
     name: custom-keycloak
     driver: bridge
