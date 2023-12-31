@@ -9,12 +9,14 @@ import { HomeComponent } from './home/home.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
+import { SuccessfulRegisterComponent } from './successful-register/successful-register.component';
 
 
 const appRoutes: Routes = [
   { path: '', component:  HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: 'successful-register', component: SuccessfulRegisterComponent }
 ];
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ const appRoutes: Routes = [
     AppHeaderComponent,
     LoginComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    SuccessfulRegisterComponent
   ],
   imports: [
     BrowserModule,

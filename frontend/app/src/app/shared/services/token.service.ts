@@ -20,7 +20,7 @@ export class TokenService {
 
       const refresh_token = localStorage.getItem('refresh_token');
 
-      if(this.isTokenExpired(refresh_token)) {
+      if(this.isRefreshTokenExpired(refresh_token)) {
         this.router.navigate(['/login']);
       }
 
@@ -46,6 +46,12 @@ export class TokenService {
   private isTokenExpired(token: string): boolean {
     // Extract the expiration date from the token and convert it to a Date object
     const expirationDate = new Date(localStorage.getItem("expires_in"));
+    return expirationDate < new Date();
+  }
+
+  private isRefreshTokenExpired(token: string): boolean {
+    // Extract the expiration date from the token and convert it to a Date object
+    const expirationDate = new Date(localStorage.getItem("refresh_expires_in"));
     return expirationDate < new Date();
   }
 

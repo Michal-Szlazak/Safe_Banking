@@ -12,6 +12,7 @@ services:
       - '8083:8083'
     networks:
       - net-apiGw-bankServ
+      - net-bankdb-bankServ
 
   auth-service:
     <<: *service
@@ -47,6 +48,21 @@ services:
     networks:
       - custom-keycloak
 
+  bankdb:
+    container_name: bank_db
+    image: postgres:14.7
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bankdb
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: sa
+    ports:
+      - '5433:5433'
+    volumes:
+      - bankdb:/var/lib/postgresql/data
+    networks:
+      - net-bankdb-bankServ
+
   keycloak:
     image: quay.io/keycloak/keycloak:latest
     environment:
@@ -75,12 +91,15 @@ services:
 volumes:
   postgres:
     driver: local
+  bankdb:
+    driver: local
 
 networks:
   net-apiGw-bankServ:
   net-apiGw-authServ:
   net-authServ-keycloak:
   net-apiGw-keycloak:
+  net-bankdb-bankServ:
   custom-keycloak:
     name: custom-keycloak
     driver: bridge
