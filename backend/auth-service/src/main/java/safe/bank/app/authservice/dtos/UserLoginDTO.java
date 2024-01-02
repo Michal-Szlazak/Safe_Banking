@@ -1,5 +1,6 @@
 package safe.bank.app.authservice.dtos;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
@@ -9,6 +10,9 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class UserLoginDTO {
 
+    @NotBlank
     String email;
+
+    @NotBlank
     String password;
 }

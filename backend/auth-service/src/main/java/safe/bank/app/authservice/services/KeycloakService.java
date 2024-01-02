@@ -22,7 +22,6 @@ import safe.bank.app.authservice.entities.ErrorResponseEntity;
 import safe.bank.app.authservice.mappers.BankUserMapper;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class KeycloakService {
@@ -108,6 +107,15 @@ public class KeycloakService {
                 .stream()
                 .map(RoleRepresentation::toString)
                 .toList();
+    }
+
+    public void forgotPasswordEmail(String email) {
+        UsersResource usersResource = realmResource.users();
+        UserRepresentation userRepresentation = usersResource.search(email).get(0);
+        UserResource userResource = usersResource.get(userRepresentation.getId());
+        List<String> action=new ArrayList<>();
+        action.add("UPDATE_PASSWORD");
+        userResource.executeActionsEmail(action);
     }
 
     private UserRepresentation getUserRepresentation(UserPostDTO userPostDTO) {

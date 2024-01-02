@@ -28,7 +28,7 @@ public class UserPublicController {
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String login(@RequestBody UserLoginDTO userLoginDTO) {
+    public String login(@RequestBody @Valid UserLoginDTO userLoginDTO) {
         return keycloakService.login(userLoginDTO.getEmail(), userLoginDTO.getPassword());
     }
 
@@ -41,5 +41,11 @@ public class UserPublicController {
     @PostMapping(value = "/refreshToken")
     public String refreshJwtToken(@RequestHeader(name = "refresh_token") String refreshToken) {
         return keycloakService.refreshJwtToken(refreshToken);
+    }
+
+    @PostMapping("/forgotPassword")
+    @ResponseStatus(HttpStatus.OK)
+    public void forgotPassword(@RequestParam(name = "email") String email) {
+        keycloakService.forgotPasswordEmail(email);
     }
 }

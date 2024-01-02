@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
+import safe.bank.app.authservice.validation.EntropyValidation;
 import safe.bank.app.authservice.validation.PasswordMatches;
 
 @Value
@@ -29,13 +30,14 @@ public class UserPostDTO {
 
     @NotBlank(message = "Phone number cannot be blank")
     @Pattern(
-            regexp = "^[0-9]{9}$",
+            regexp = "^\\d{9}$",
             message = "Phone number must be 10 digits"
     )
     String phoneNumber;
 
     @NotBlank(message = "Password cannot be blank")
     @Size(min = 8, message = "Password must be at least 8 characters long")
+    @EntropyValidation
     String password;
 
     @NotBlank(message = "Password cannot be blank")
