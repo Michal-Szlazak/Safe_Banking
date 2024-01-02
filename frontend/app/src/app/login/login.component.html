@@ -10,7 +10,7 @@
       <div>
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
         <div class="mt-2">
-          <input formControlName="email" id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          <input formControlName="email" id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50">
           <div *ngIf="loginForm.controls['email']?.invalid && (loginForm.controls['email']?.dirty || loginForm.controls['email']?.touched)">
             <div *ngIf="loginForm.controls['email']?.errors?.required">Email is required.</div>
             <div *ngIf="loginForm.controls['email']?.errors?.email">Invalid email.</div>
@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="mt-2">
-          <input formControlName="password" id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          <input formControlName="password" id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50">
           <div *ngIf="loginForm.controls['password']?.invalid && (loginForm.controls['password']?.dirty || loginForm.controls['password']?.touched)">
             <div *ngIf="loginForm.controls['password']?.errors?.required">Password is required.</div>
             <div *ngIf="loginForm.controls['password']?.errors?.minlength">Password must be at least 8 characters.</div>
@@ -38,19 +38,22 @@
       </div>
 
       <div>
-        <button type="submit" [disabled]="loginForm.invalid"
-                class="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+        <button type="submit" [disabled]="loginForm.invalid || isUserBlocked" id="button" name="button"
+                class="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50
                       {{ !loginForm.invalid ? 'bg-indigo-500 hover:bg-indigo-700 text-white' : 'bg-gray-300 cursor-not-allowed text-gray-500' }}">
           Sign in</button>
       </div>
-      <div *ngIf="loginError" class="error-message">
+      <div *ngIf="loginError" class="error-message bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
         Login failed. Please check your credentials and try again.
+      </div>
+      <div *ngIf="isUserBlocked" class="error-message bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <p>Your account is temporarily blocked. Please wait {{ remainingTime }} seconds before attempting to log in again.</p>
       </div>
     </form>
 
     <p class="mt-10 text-center text-sm text-gray-500">
       Not a member?
-      <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Create an account</a>
+      <a routerLink="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Create an account</a>
     </p>
   </div>
 </div>
