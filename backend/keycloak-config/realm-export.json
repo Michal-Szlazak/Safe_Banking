@@ -37,14 +37,14 @@
   "duplicateEmailsAllowed": false,
   "resetPasswordAllowed": false,
   "editUsernameAllowed": false,
-  "bruteForceProtected": false,
+  "bruteForceProtected": true,
   "permanentLockout": false,
   "maxFailureWaitSeconds": 900,
   "minimumQuickLoginWaitSeconds": 60,
   "waitIncrementSeconds": 60,
   "quickLoginCheckMilliSeconds": 1000,
   "maxDeltaTimeSeconds": 43200,
-  "failureFactor": 30,
+  "failureFactor": 5,
   "roles": {
     "realm": [
       {
@@ -1352,7 +1352,20 @@
     "xXSSProtection": "1; mode=block",
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
-  "smtpServer": {},
+  "smtpServer": {
+    "replyToDisplayName": "SafeBankApplication",
+    "starttls": "true",
+    "auth": "true",
+    "envelopeFrom": "SafeBankApplication",
+    "ssl": "false",
+    "password": "zqvd bvmx okxe sdta",
+    "port": "587",
+    "replyTo": "safebankapp@gmail.com",
+    "host": "smtp.gmail.com",
+    "from": "safebankapp@gmail.com",
+    "fromDisplayName": "SafeBankApplication",
+    "user": "safebankapp"
+  },
   "eventsEnabled": false,
   "eventsListeners": [
     "jboss-logging"
