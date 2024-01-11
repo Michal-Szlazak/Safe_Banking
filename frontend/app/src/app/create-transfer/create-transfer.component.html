@@ -1,0 +1,67 @@
+<!-- bank-transfer-form.component.html -->
+
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold mb-4">Bank Transfer Form</h2>
+
+  <form [formGroup]="bankTransferForm" (ngSubmit)="submitTransferForm()">
+    <div class="mb-4">
+      <label for="receiverName" class="block text-sm font-medium text-gray-600">Receiver's Name</label>
+      <input formControlName="receiverName" id="receiverName" type="text" class="mt-1 p-2 w-full border rounded-md">
+      <div *ngIf="bankTransferForm.controls['receiverName']?.invalid && (bankTransferForm.controls['receiverName']?.dirty || bankTransferForm.controls['receiverName']?.touched)">
+        <div *ngIf="bankTransferForm.controls['receiverName']?.errors?.required">Name is required.</div>
+        <div *ngIf="bankTransferForm.controls['receiverName']?.errors?.minlength">Name must have at least 2 characters.</div>
+        <div *ngIf="bankTransferForm.controls['receiverName']?.errors?.maxlength">Name cannot exceed 20 characters.</div>
+        <div *ngIf="bankTransferForm.get('receiverName').hasError('lettersAndSpaceValidator')">Name can only contains characters and spaces.</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="receiverAccount" class="block text-sm font-medium text-gray-600">Receiver's Account Number</label>
+      <input formControlName="receiverAccount" id="receiverAccount" type="text" class="mt-1 p-2 w-full border rounded-md">
+      <div *ngIf="bankTransferForm.controls['receiverAccount']?.invalid && (bankTransferForm.controls['receiverAccount']?.dirty || bankTransferForm.controls['receiverAccount']?.touched)">
+        <div *ngIf="bankTransferForm.controls['receiverAccount']?.errors?.required">Name is required.</div>
+        <div *ngIf="bankTransferForm.controls['receiverAccount']?.errors?.minlength">Wrong length - expected 26 digits.</div>
+        <div *ngIf="bankTransferForm.controls['receiverAccount']?.errors?.maxlength">Wrong length - expected 26 digits.</div>
+        <div *ngIf="bankTransferForm.get('receiverAccount').hasError('accountNumberValidator')">Account number can only contain 26 digits.</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="senderAccount" class="block text-sm font-medium text-gray-600">Sender's Account Number</label>
+      <input formControlName="senderAccount" id="senderAccount" type="text" class="mt-1 p-2 w-full border rounded-md">
+      <div *ngIf="bankTransferForm.controls['senderAccount']?.invalid && (bankTransferForm.controls['senderAccount']?.dirty || bankTransferForm.controls['senderAccount']?.touched)">
+        <div *ngIf="bankTransferForm.controls['senderAccount']?.errors?.required">Name is required.</div>
+        <div *ngIf="bankTransferForm.controls['senderAccount']?.errors?.minlength">Wrong length - expected 26 digits.</div>
+        <div *ngIf="bankTransferForm.controls['senderAccount']?.errors?.maxlength">Wrong length - expected 26 digits.</div>
+        <div *ngIf="bankTransferForm.get('senderAccount').hasError('accountNumberValidator')">Account number can only contain 26 digits.</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="title" class="block text-sm font-medium text-gray-600">Title</label>
+      <input formControlName="title" id="title" type="text" class="mt-1 p-2 w-full border rounded-md">
+      <div *ngIf="bankTransferForm.controls['title']?.invalid && (bankTransferForm.controls['title']?.dirty || bankTransferForm.controls['title']?.touched)">
+        <div *ngIf="bankTransferForm.controls['title']?.errors?.required">Title is required.</div>
+        <div *ngIf="bankTransferForm.controls['title']?.errors?.minlength">Title must have at least 2 characters.</div>
+        <div *ngIf="bankTransferForm.controls['title']?.errors?.maxlength">Title cannot exceed 20 characters.</div>
+        <div *ngIf="bankTransferForm.get('title').hasError('lettersAndSpaceValidator')">Title can only contains characters and spaces.</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="amount" class="block text-sm font-medium text-gray-600">Amount</label>
+      <input formControlName="amount" id="amount" type="number" class="mt-1 p-2 w-full border rounded-md">
+      <div *ngIf="bankTransferForm.controls['amount']?.invalid && (bankTransferForm.controls['amount']?.dirty || bankTransferForm.controls['amount']?.touched)">
+        <div *ngIf="bankTransferForm.controls['amount']?.errors?.required">Amount is required.</div>
+        <div *ngIf="bankTransferForm.get('amount').hasError('amountValidation')">Amount has to be positive and have max 2 decimal digits.</div>
+      </div>
+    </div>
+
+    <div>
+      <button type="submit" [disabled]="bankTransferForm.invalid"
+              class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+                      {{ !bankTransferForm.invalid ? 'bg-indigo-500 hover:bg-indigo-700 text-white' : 'bg-gray-300 cursor-not-allowed text-gray-500' }}"
+      >Transfer</button>
+    </div>
+  </form>
+</div>

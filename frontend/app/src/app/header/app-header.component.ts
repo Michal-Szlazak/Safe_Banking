@@ -19,6 +19,8 @@ export class AppHeaderComponent {
 
   logout(): void {
   console.log("logout");
+  console.log(localStorage.getItem('expires_in'));
+
     this.logoutService.logout().subscribe({
       next: (success) => {
         if (success) {

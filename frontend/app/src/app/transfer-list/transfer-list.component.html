@@ -1,0 +1,16 @@
+<div class="container mx-auto mt-8 p-4">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">Transfer List</h2>
+
+  <ul>
+    <li *ngFor="let transfer of transfers" class="bg-white rounded-md shadow-md overflow-hidden mb-4">
+      <div class="p-6">
+        <h3 class="text-2xl font-semibold text-blue-600 mb-2">{{ transfer.title }}</h3>
+        <p class="text-gray-600">{{ transfer.receiverName }}</p>
+        <p class="text-gray-600">Sender Number: {{ transfer.senderNumber }}</p>
+        <p class="text-gray-600">Receiver Number: {{ transfer.receiverNumber }}</p>
+        <p class="text-green-600 font-semibold text-lg">Amount: {{ transfer.amount | currency:'USD':'symbol':'1.2-2' }}</p>
+        <p class="text-gray-600">Timestamp: {{ transfer.timestamp | date:'medium' }}</p>
+      </div>
+    </li>
+  </ul>
+</div>

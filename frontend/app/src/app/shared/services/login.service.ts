@@ -33,7 +33,7 @@ export class LoginService {
         localStorage.setItem('access_token', response.access_token);
         localStorage.setItem('expires_in', accessTokenExpiration.toString());
         localStorage.setItem('refresh_token', response.refresh_token);
-        localStorage.setItem('expires_in', refreshTokenExpiration.toString());
+        localStorage.setItem('refresh_expires_in', refreshTokenExpiration.toString());
 
         return true;
       }),

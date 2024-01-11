@@ -10,9 +10,6 @@ import {TokenService} from "./token.service";
 export class LogoutService {
   private apiUrl = 'http://localhost:8081/auth/user/private/logout';
 
-  private getToken(): string {
-    return localStorage.getItem("access_token");
-  }
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 

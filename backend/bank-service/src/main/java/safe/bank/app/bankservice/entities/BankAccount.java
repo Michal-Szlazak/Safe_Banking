@@ -1,13 +1,12 @@
 package safe.bank.app.bankservice.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
@@ -17,12 +16,15 @@ import java.util.UUID;
 public class BankAccount {
 
     @Id
-    private UUID id;
-
+    @GeneratedValue
+    private UUID accountId;
+    private String accountName;
     private String accountNumber;
-
+    private String cvv;
+    private Instant expiresAt;
     private BigDecimal balance;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "userId")
     private BankUser bankUser;
 }

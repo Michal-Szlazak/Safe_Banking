@@ -1,7 +1,9 @@
-<div *ngIf="isLoggedIn()">
-  Welcome to the dashboard!
+<!-- app.component.html -->
+<div *ngIf="isLoggedIn()" class="flex">
+  <app-menu-bar class="w-1/3"></app-menu-bar>
+  <router-outlet name="secondary"></router-outlet>
+  <ngx-toastr></ngx-toastr>
 </div>
 <div *ngIf="!isLoggedIn()">
-  <!-- Content for non-logged-in users -->
   Please log in to access the dashboard.
 </div>

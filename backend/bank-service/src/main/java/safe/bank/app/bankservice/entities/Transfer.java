@@ -19,11 +19,14 @@ public class Transfer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private BankUser sender;
+    private String title;
+    private String receiverName;
 
     @ManyToOne
-    private BankUser receiver;
+    private BankAccount sender;
+
+    @ManyToOne
+    private BankAccount receiver;
 
     private BigDecimal amount;
 

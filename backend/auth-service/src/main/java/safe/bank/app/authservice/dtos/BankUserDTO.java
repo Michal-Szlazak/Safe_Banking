@@ -9,4 +9,6 @@ public class BankUserDTO {
 
     private UUID userId;
     private String phoneNumber;
+    private String firstName;
+    private String lastName;
 }

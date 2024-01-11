@@ -14,6 +14,7 @@ services:
       - net-apiGw-bankServ
       - net-bankdb-bankServ
       - net-authServ-bankServ
+      - net-bankServ-keycloak
 
   auth-service:
     <<: *service
@@ -86,6 +87,7 @@ services:
       - custom-keycloak
       - net-authServ-keycloak
       - net-apiGw-keycloak
+      - net-bankServ-keycloak
     command:
      - start-dev
      - --import-realm
@@ -103,6 +105,8 @@ networks:
   net-apiGw-keycloak:
   net-bankdb-bankServ:
   net-authServ-bankServ:
+  net-bankServ-keycloak:
+
   custom-keycloak:
     name: custom-keycloak
     driver: bridge

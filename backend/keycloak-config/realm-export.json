@@ -495,9 +495,24 @@
   "users": [
     {
       "id": "73162244-c3f4-4682-ada1-67bfa54838fe",
-      "username": "user@mail.com",
-      "email": "user@mail.com",
+      "username": "johndoe@mail.com",
+      "email": "johndoe@mail.com",
       "firstName": "John",
+      "lastName": "Doe",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "id": "73162245-c3f4-4682-ada1-67bfa54838fe",
+      "username": "janedoe@mail.com",
+      "email": "janedoe@mail.com",
+      "firstName": "Jane",
       "lastName": "Doe",
       "enabled": true,
       "credentials": [

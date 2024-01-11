@@ -35,7 +35,7 @@ export class LoginComponent {
           if (success) {
             console.log('Login successful');
             this.loginError = false;
-            this.router.navigate(['/']);
+            this.router.navigate(['/protected-home']);
             // Redirect or perform other actions after successful login
           } else {
             console.error('Login failed');

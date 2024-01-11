@@ -1,12 +1,23 @@
 server:
   port: 8083
 
+keycloak-client:
+  server-url: http://keycloak:8080
+  realm: SafeBankApp
+
 logging:
   level:
     org.springframework.web: DEBUG
     org.hibernate: ERROR
 
 spring:
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${keycloak-client.server-url}/realms/${keycloak-client.realm}/protocol/openid-connect/certs
+          issuer-uri: ${keycloak-client.server-url}/realms/${keycloak-client.realm}
 
   mvc:
     log-request-details: true # for debugging
@@ -16,6 +27,14 @@ spring:
     username: sa
     password: sa
 
+  sql:
+    init:
+      platform: postgres
+      mode: always
+      separator: "^^^ END OF SCRIPT ^^^"
+
+
+
   jpa:
     show-sql: true
     properties:
@@ -24,3 +43,4 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: create-drop
+    defer-datasource-initialization: true

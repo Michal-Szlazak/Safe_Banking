@@ -12,6 +12,7 @@ import java.util.UUID;
 public class PostBankUserDTO {
 
     UUID userId;
+    String firstName;
+    String lastName;
     String phoneNumber;
-    String address;
 }

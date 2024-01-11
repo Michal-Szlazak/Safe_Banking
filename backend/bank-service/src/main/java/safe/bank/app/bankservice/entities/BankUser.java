@@ -1,31 +1,27 @@
 package safe.bank.app.bankservice.entities;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class BankUser {
 
     @Id
     private UUID userId;
 
+    private String firstName;
+    private String lastName;
+
     private String phoneNumber;
-
-    @OneToMany
-    @JoinColumn(name = "userId")
-    private List<BankAccount> bankAccounts;
-
-    @OneToMany(mappedBy = "sender")
-    private List<Transfer> sentTransfers;
-
-    @OneToMany(mappedBy = "receiver")
-    private List<Transfer> receivedTransfers;
 }
