@@ -11,6 +11,7 @@ import {
 } from "@angular/forms";
 import {Router} from "@angular/router";
 import {entropyValidator} from "./entropy.validator";
+import {ToastrService} from "ngx-toastr";
 
 export function onlyLettersValidator(control: { value: string; }) {
 
@@ -55,7 +56,6 @@ export class RegisterComponent implements OnInit {
           // Redirect or perform other actions after successful registration
         },
         error: (err: ApiErrorResponse) => {
-          console.error('Registration failed', err);
           this.registerError = true;
           this.errorMessage = err.message;
           this.errorMessages = err.errors;

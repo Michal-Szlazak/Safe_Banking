@@ -13,8 +13,7 @@ interface BankAccount {
 
 @Component({
   selector: 'account-list',
-  templateUrl: './account-list.component.html',
-  styleUrl: './account-list.component.css'
+  templateUrl: './account-list.component.html'
 })
 export class AccountListComponent implements OnInit{
   accounts: BankAccount[] = [];

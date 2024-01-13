@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AuthService} from "../shared/services/auth.service";
 import {LogoutService} from "../shared/services/logout.service";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,8 @@ import {Router} from "@angular/router";
 export class AppHeaderComponent {
   constructor(private authService: AuthService,
               private logoutService: LogoutService,
-              private router: Router
+              private router: Router,
+              private toastr: ToastrService
   ) {}
 
   isLoggedIn(): boolean {
@@ -18,17 +20,15 @@ export class AppHeaderComponent {
   }
 
   logout(): void {
-  console.log("logout");
-  console.log(localStorage.getItem('expires_in'));
 
     this.logoutService.logout().subscribe({
       next: (success) => {
         if (success) {
-          console.log('Logout successful');
+          this.toastr.success("Logout successful");
           this.router.navigate(['/']);
           // Redirect or perform other actions after successful login
         } else {
-          console.error('Login failed');
+          this.toastr.error("Logout failed");
         }
       },
       error: (err) => {

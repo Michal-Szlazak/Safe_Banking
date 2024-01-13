@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
-import {AbstractControlOptions, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {RegisterService} from "../shared/services/register.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {entropyValidator} from "../register/entropy.validator";
 import {onlyLettersValidator} from "../register/register.component";
 import {CreateAccountService} from "../shared/services/bank-services/create-account.service";
-import {AuthService} from "../shared/services/auth.service";
 import {TokenService} from "../shared/services/token.service";
 import {ToastrService} from "ngx-toastr";
 
@@ -31,8 +28,8 @@ export class CreateBankAccountComponent {
     });
   }
   onSubmit() {
+
     this.jwtToken = this.tokenService.getToken();
-    console.log(this.jwtToken);
     this.createAccountService.create(this.form.value, this.jwtToken).subscribe(
       success => {
         if (success) {

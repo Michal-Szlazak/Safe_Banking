@@ -3,6 +3,7 @@ import { LoginService } from "../shared/services/login.service";
 import {AbstractControlOptions, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {interval, Subscription} from "rxjs";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent {
   remainingTime: number = 60;
   blockDuration = 60 * 1000;
 
-  constructor(private loginService: LoginService, private fb: FormBuilder, private router: Router) {
+  constructor(private loginService: LoginService, private fb: FormBuilder, private router: Router,
+              private toastr: ToastrService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.maxLength(20), Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]]
@@ -33,16 +35,14 @@ export class LoginComponent {
       this.loginService.login(this.loginForm.value).subscribe({
         next: (success) => {
           if (success) {
-            console.log('Login successful');
             this.loginError = false;
+            this.toastr.success("Logged in successfully")
             this.router.navigate(['/protected-home']);
             // Redirect or perform other actions after successful login
           } else {
-            console.error('Login failed');
             this.loginAttempts++;
             this.loginError = true;
 
-            console.log(this.loginAttempts);
             if(this.loginAttempts >= this.maxLoginAttempts) {
               this.blockUser();
             }
@@ -95,14 +95,8 @@ export class LoginComponent {
 
   toggleControls(): void {
     if (this.isUserBlocked) {
-      // this.loginForm.get('email')?.disable();
-      // this.loginForm.get('password')?.disable();
-      // this.loginForm.get('button')?.disable();
       this.loginForm.disable();
     } else {
-      // this.loginForm.get('email')?.enable();
-      // this.loginForm.get('password')?.enable();
-      // this.loginForm.get('button')?.enable();
       this.loginForm.enable();
     }
   }

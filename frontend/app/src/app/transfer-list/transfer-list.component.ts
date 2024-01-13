@@ -25,7 +25,6 @@ export class TransferListComponent implements OnInit {
         this.transfers = result;
       },
       error => {
-        console.error('Error loading accounts:', error);
         this.toastr.error('Failed to load the accounts.', 'Failed');
       }
     );

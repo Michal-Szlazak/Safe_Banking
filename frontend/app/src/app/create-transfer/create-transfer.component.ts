@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {onlyLettersValidator} from "../register/register.component";
 import {TransferService} from "../shared/services/bank-services/transfer.service";
 import {TokenService} from "../shared/services/token.service";
 import {ToastrService} from "ngx-toastr";
@@ -63,22 +62,18 @@ export class CreateTransferComponent {
     if (this.bankTransferForm.valid) {
       // Handle the logic for sending the bank transfer
       const formValues = this.bankTransferForm.value;
-      console.log('Sending bank transfer...', formValues);
       const jwtToken = this.tokenService.getToken();
       this.transferService.create(this.bankTransferForm.value, jwtToken).subscribe(
         success => {
           if (success) {
             this.toastr.success('Transfer sent successfully', 'Success');
             this.router.navigate(['/protected-home']);
-            console.log('Account creation successful');
           } else {
             this.toastr.error('Failed to make the transfer.', 'Failed');
-            console.error('Account creation failed');
           }
         },
         error => {
           this.toastr.error('Failed to make the transfer', 'Failed');
-          console.error('Unexpected error during sending the transfer', error);
         }
       );
     } else {
