@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
@@ -13,7 +14,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BankAccount {
+public class BankAccount implements Serializable {
 
     @Id
     @GeneratedValue
@@ -23,6 +24,9 @@ public class BankAccount {
     private String cvv;
     private Instant expiresAt;
     private BigDecimal balance;
+
+    @Version
+    private Long version;
 
     @ManyToOne
     @JoinColumn(name = "userId")
