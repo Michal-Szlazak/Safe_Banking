@@ -17,13 +17,17 @@ public class BankUserService {
 
     private final BankUserRepository bankUserRepository;
     private final BankUserMapper bankUserMapper;
+    private final EncryptionService encryptionService;
 
     public void createBankUser(PostBankUserDTO userDTO) {
-        BankUser bankUser = bankUserMapper.toEntity(userDTO);
-        bankUserRepository.save(bankUser);
+
+        BankUser plainBankUser = bankUserMapper.toEntity(userDTO);
+        BankUser encryptedBankUser = encryptionService.encryptBankUser(plainBankUser);
+        bankUserRepository.save(encryptedBankUser);
     }
 
     public BankUser getUser(UUID userId) {
+
         return bankUserRepository.findById(userId).orElseThrow(
                 () ->new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "User for id " + userId + " not found."));

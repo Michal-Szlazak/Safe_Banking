@@ -15,7 +15,8 @@ public interface BankAccountMapper {
     @Mapping(target = "cvv", source = "generatedAccountDTO.cvv")
     @Mapping(target = "accountNumber", source = "generatedAccountDTO.accountNumber")
     @Mapping(target = "expiresAt", source = "generatedAccountDTO.expiresAt")
-    @Mapping(target = "balance", constant = "0")
+    @Mapping(target = "iv", source = "generatedAccountDTO.iv")
+    @Mapping(target = "balance", constant = "1000")
     BankAccount toEntity(BankAccountCreateDto bankAccountCreateDto,
                          BankUser bankUser,
                          GeneratedAccountDTO generatedAccountDTO);

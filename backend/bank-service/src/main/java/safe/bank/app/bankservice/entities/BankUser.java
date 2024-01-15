@@ -3,10 +3,7 @@ package safe.bank.app.bankservice.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -15,6 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class BankUser {
 
     @Id
@@ -22,6 +20,6 @@ public class BankUser {
 
     private String firstName;
     private String lastName;
-
     private String phoneNumber;
+    private byte[] iv;
 }

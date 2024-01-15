@@ -20,7 +20,7 @@ public class TransferController {
     public void sendTransaction(@RequestBody TransferCreateDTO transactionCreateDTO,
                                 JwtAuthenticationToken token) {
         String userId = token.getName();
-        transferService.sendTransaction(transactionCreateDTO, UUID.fromString(userId));
+        transferService.sendTransfer(transactionCreateDTO, UUID.fromString(userId));
     }
 
     @GetMapping

@@ -23,7 +23,8 @@ public class BankAccount implements Serializable {
     private String accountNumber;
     private String cvv;
     private Instant expiresAt;
-    private BigDecimal balance;
+    private String balance;
+    private byte[] iv;
 
     @Version
     private Long version;

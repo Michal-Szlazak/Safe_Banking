@@ -1,0 +1,29 @@
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <!-- Your logo or header here -->
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Reset Password</h2>
+  </div>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form (ngSubmit)="onSubmit()" [formGroup]="passwordResetForm" class="space-y-6">
+      <div>
+        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+        <div class="mt-2">
+          <input formControlName="email" id="email" name="email" type="email" autocomplete="email"
+                 required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50">
+          <div *ngIf="passwordResetForm.controls['email']?.invalid && (passwordResetForm.controls['email']?.dirty || passwordResetForm.controls['email']?.touched)">
+            <div *ngIf="passwordResetForm.controls['email']?.errors?.required">Email is required.</div>
+            <div *ngIf="passwordResetForm.controls['email']?.errors?.email">Invalid email.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" [disabled]="passwordResetForm.invalid"
+                class="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50
+                  {{ !passwordResetForm.invalid ? 'bg-indigo-500 hover:bg-indigo-700 text-white' : 'bg-gray-300 cursor-not-allowed text-gray-500' }}">
+          Send Reset Link</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import safe.bank.app.bankservice.dtos.BankAccountCreateDto;
 import safe.bank.app.bankservice.dtos.GeneratedAccountDTO;
 import safe.bank.app.bankservice.repositories.BankAccountRepository;
 
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
@@ -23,7 +24,8 @@ public class FakerService {
         String accountNumber = generateBankAccountNumber();
         String cvv = generateCcvNumber();
         Instant expiresAt = getExpirationDate();
-        return new GeneratedAccountDTO(accountNumber, cvv, expiresAt);
+        BigDecimal balance = BigDecimal.valueOf(1000);
+        return new GeneratedAccountDTO(accountNumber, cvv, expiresAt, balance.toString());
     }
     private String generateFakeBankAccountNumber() {
 

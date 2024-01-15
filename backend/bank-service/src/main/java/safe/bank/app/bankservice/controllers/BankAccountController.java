@@ -8,6 +8,12 @@ import safe.bank.app.bankservice.dtos.BankAccountCreateDto;
 import safe.bank.app.bankservice.dtos.BankAccountGetDTO;
 import safe.bank.app.bankservice.services.BankAccountService;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +26,7 @@ public class BankAccountController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createBankAccount(@RequestBody BankAccountCreateDto bankAccountCreateDto, JwtAuthenticationToken token) {
+    public void createBankAccount(@RequestBody BankAccountCreateDto bankAccountCreateDto, JwtAuthenticationToken token) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         String userId = token.getName();
         bankAccountService.createBankAccount(bankAccountCreateDto, UUID.fromString(userId));
     }

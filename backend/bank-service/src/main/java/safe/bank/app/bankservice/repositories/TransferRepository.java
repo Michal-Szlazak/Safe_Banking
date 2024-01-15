@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface TransferRepository extends JpaRepository<Transfer, UUID> {
 
-    List<Transfer> findAllBySenderBankUserUserId(UUID userId);
+    List<Transfer> findAllBySenderBankUserUserIdOrReceiverBankUserUserIdOrderByTimestamp(UUID senderId, UUID receiverId);
 }

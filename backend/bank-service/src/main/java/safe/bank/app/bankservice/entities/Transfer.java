@@ -18,17 +18,16 @@ public class Transfer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
     private String receiverName;
+    private String amount;
+    private byte[] iv;
 
     @ManyToOne
     private BankAccount sender;
 
     @ManyToOne
     private BankAccount receiver;
-
-    private BigDecimal amount;
 
     @CreationTimestamp
     private LocalDateTime timestamp;
