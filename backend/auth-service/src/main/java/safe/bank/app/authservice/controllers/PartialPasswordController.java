@@ -18,14 +18,14 @@ public class PartialPasswordController {
 
     private final PartialPasswordService partialPasswordService;
 
-    @GetMapping("/auth/private/partial-password")
+    @GetMapping("/api/auth/private/partial-password")
     @ResponseStatus(HttpStatus.OK)
     public PartialPasswordGetDTO getPartialPassword(JwtAuthenticationToken token) {
         String userId = token.getName();
         return partialPasswordService.getPartialPassword(UUID.fromString(userId));
     }
 
-    @PostMapping("/auth/public/partial-password")
+    @PostMapping("/api/auth/public/partial-password")
     @ResponseStatus(HttpStatus.CREATED)
     public void createPartialPasswordSet(PartialPasswordCreateDTO partialPasswordCreateDTO) {
 
@@ -33,7 +33,7 @@ public class PartialPasswordController {
                 partialPasswordCreateDTO.userId());
     }
 
-    @PostMapping("/auth/private/partial-password/check")
+    @PostMapping("/api/auth/private/partial-password/check")
     @ResponseStatus(HttpStatus.OK)
     public void checkPartialPassword(@RequestBody PartialPasswordPostDTO partialPasswordPostDTO,
                                         JwtAuthenticationToken token) {

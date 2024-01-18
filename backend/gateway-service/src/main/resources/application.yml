@@ -13,16 +13,20 @@ server:
 
 logging:
   level:
-    org.springframework.web: DEBUG
-    org.hibernate: ERROR
+    org.springframework.web: TRACE
+    org.hibernate: TRACE
 
 spring:
   cloud:
     gateway:
+      httpclient:
+        ssl:
+          useInsecureTrustManager: true
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "http://localhost:4200"
+            allowedOrigins:
+              - "https://localhost:8443"
             allowedHeaders: "*"
             allowedMethods:
               - GET

@@ -23,7 +23,7 @@ export interface TransferGet {
   providedIn: 'root',
 })
 export class TransferService {
-  private apiUrl = 'http://localhost:8081/bank/transfer';
+  private apiUrl = 'https://localhost:8443/api/bank/transfer';
 
   constructor(private http: HttpClient) {}
 

@@ -12,11 +12,11 @@ public class RoutingConfig {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("bank-service", r -> r
-                        .path("/bank/**")
+                        .path("/api/bank/**")
                         .uri("https://bank-service:8083")
                 )
                 .route("auth-service", r -> r
-                        .path("/auth/**")
+                        .path("/api/auth/**")
                         .uri("https://auth-service:8082/")
                 )
                 .build();

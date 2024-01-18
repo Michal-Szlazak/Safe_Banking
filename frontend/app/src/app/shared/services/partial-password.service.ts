@@ -20,7 +20,7 @@ interface PartialPasswordPost {
 })
 export class PartialPasswordService {
 
-  private apiUrl = 'http://localhost:8081/auth/private/partial-password';
+  private apiUrl = 'https://localhost:8443/api/auth/private/partial-password';
 
   constructor(private http: HttpClient,
               private tokenService: TokenService) {}

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import safe.bank.app.bankservice.dtos.PostBankUserDTO;
 import safe.bank.app.bankservice.services.BankUserService;
 
-@RequestMapping("/bank/user")
+@RequestMapping("/api/bank/user")
 @RestController
 @RequiredArgsConstructor
 public class BankUserController {

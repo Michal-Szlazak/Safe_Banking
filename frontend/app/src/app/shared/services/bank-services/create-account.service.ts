@@ -11,7 +11,7 @@ interface AccountData {
   providedIn: 'root',
 })
 export class CreateAccountService {
-  private apiUrl = 'http://localhost:8081/bank/account';
+  private apiUrl = 'https://localhost:8443/api/bank/account';
 
   constructor(private http: HttpClient) {}
 

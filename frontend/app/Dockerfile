@@ -10,5 +10,7 @@ RUN npm run build
 FROM nginx:latest
 COPY --from=build /app/dist/app /usr/share/nginx/html
 COPY ./nginx-config/nginx.conf /etc/nginx/conf.d/default.conf 
-EXPOSE 80
+COPY ./nginx-config/cert.crt /etc/nginx/ssl/cert.crt
+COPY ./nginx-config/cert.key /etc/nginx/ssl/cert.key
+EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]

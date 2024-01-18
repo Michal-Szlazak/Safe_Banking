@@ -8,7 +8,7 @@ import {TokenService} from "./token.service";
   providedIn: 'root',
 })
 export class LogoutService {
-  private apiUrl = 'http://localhost:8081/auth/user/private/logout';
+  private apiUrl = 'https://localhost:8443/api/auth/user/private/logout';
 
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}

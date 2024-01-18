@@ -16,7 +16,7 @@ interface RegisterData {
   providedIn: 'root',
 })
 export class RegisterService {
-  private apiUrl = 'http://localhost:8081/auth/user/public/register';
+  private apiUrl = 'https://localhost:8443/api/auth/user/public/register';
 
   constructor(private http: HttpClient) {}
 

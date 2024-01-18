@@ -35,7 +35,7 @@ export class TokenService {
       'Content-Type': 'application/json',
       'refresh_token': refresh_token
     });
-    const apiUrl: string = 'http://localhost:8081/auth/user/public/refreshToken'
+    const apiUrl: string = 'https://localhost:8443/api/auth/user/public/refreshToken'
 
     return this.http.post<TokenDTO>(`${apiUrl}`, {}, { headers }).pipe(
       map((response: TokenDTO) => {

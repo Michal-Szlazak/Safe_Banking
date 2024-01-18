@@ -21,7 +21,7 @@ public class BankService {
 
     public Mono<ResponseEntity<String>> createBankUser(BankUserDTO bankUserDTO) {
 
-        String fullUri = BACKEND_SERVICE_URI + "/bank/user";
+        String fullUri = BACKEND_SERVICE_URI + "/api/bank/user";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

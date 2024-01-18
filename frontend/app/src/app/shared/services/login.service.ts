@@ -12,7 +12,7 @@ interface LoginData {
   providedIn: 'root',
 })
 export class LoginService {
-  private apiUrl = 'http://localhost:8081/auth/user/public/login';
+  private apiUrl = 'https://localhost:8443/api/auth/user/public/login';
 
   constructor(private http: HttpClient) {}
 

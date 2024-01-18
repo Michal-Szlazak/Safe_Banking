@@ -18,7 +18,7 @@ import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth/user/public")
+@RequestMapping("/api/auth/user/public")
 public class UserPublicController {
 
     private final KeycloakService keycloakService;

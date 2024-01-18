@@ -11,6 +11,9 @@ services:
       context: ./frontend/app
     ports:
       - "8085:80"
+      - "8443:443"
+    networks:
+      - net-frontend
 
   keycloak:
       image: quay.io/keycloak/keycloak:latest
@@ -24,7 +27,7 @@ services:
         DB_USER: postgres
         DB_PASSWORD: postgres
       volumes:
-      - ./keycloak-config/realm-export.json:/opt/keycloak/data/import/realm.json
+      - ./backend/keycloak-config/realm-export.json:/opt/keycloak/data/import/realm.json
       depends_on:
         - auth-db
       ports:
@@ -60,6 +63,7 @@ services:
       - '8081:8081'
     networks:
       - net-gateway
+      - net-frontend
 
   auth-db:
     container_name: auth-db
@@ -104,3 +108,4 @@ networks:
   net-gateway:
   net-bankdb:
   net-auth:
+  net-frontend:

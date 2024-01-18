@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/bank/transfer")
+@RequestMapping("/api/bank/transfer")
 public class TransferController {
 
     private final TransferService transferService;

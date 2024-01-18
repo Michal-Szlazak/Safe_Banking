@@ -8,7 +8,7 @@ import {ApiErrorResponse} from "../../entities/HttpResponse";
 })
 export class ForgotPasswordService {
 
-  private apiUri: string = 'http://localhost:8081/auth/user/public/forgotPassword'
+  private apiUri: string = 'https://localhost:8443/api/auth/user/public/forgotPassword'
 
   constructor(private http: HttpClient) {}
 
