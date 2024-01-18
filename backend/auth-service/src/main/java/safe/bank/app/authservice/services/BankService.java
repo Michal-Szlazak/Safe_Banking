@@ -12,16 +12,16 @@ import safe.bank.app.authservice.dtos.BankUserDTO;
 @Service
 public class BankService {
 
-    private final String bankServiceUri = "http://bank-service:8083";
+    private static final String BACKEND_SERVICE_URI = "http://bank-service:8083";
     private final WebClient webClient;
 
     public BankService() {
-        this.webClient = WebClient.create(bankServiceUri).mutate().build();
+        this.webClient = WebClient.create(BACKEND_SERVICE_URI).mutate().build();
     }
 
     public Mono<ResponseEntity<String>> createBankUser(BankUserDTO bankUserDTO) {
 
-        String fullUri = bankServiceUri + "/bank/user";
+        String fullUri = BACKEND_SERVICE_URI + "/bank/user";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

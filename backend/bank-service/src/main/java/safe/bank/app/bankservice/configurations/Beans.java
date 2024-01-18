@@ -4,10 +4,8 @@ import com.github.javafaker.Faker;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.NoSuchAlgorithmException;
 
 @Component
 public class Beans {
@@ -18,10 +16,8 @@ public class Beans {
     }
 
     @Bean
-    public SecretKey secretKey() throws NoSuchAlgorithmException {
-//        return generateKey(256); // You can specify the key size
+    public SecretKey secretKey() {
         byte[] keyBytes = hexStringToByteArray("7d3480a02ebe5b24d46dc14c1805677d5f9615b6f57e48a39d7e8f8e6f4cc1a3");
-        // Create a SecretKey object using SecretKeySpec
         return new SecretKeySpec(keyBytes, "AES");
     }
 
@@ -33,12 +29,5 @@ public class Beans {
                     + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
-    }
-
-
-    private SecretKey generateKey(int n) throws NoSuchAlgorithmException {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        keyGenerator.init(n);
-        return keyGenerator.generateKey();
     }
 }

@@ -19,7 +19,6 @@ import java.util.Base64;
 public class EncryptionService {
 
     private final SecretKey secretKey;
-    private static final String ALGORITHM = "AES";
     private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
 
     public IvParameterSpec generateIv() {
@@ -36,7 +35,6 @@ public class EncryptionService {
             return Base64.getEncoder()
                     .encodeToString(cipherText);
         } catch (Exception e) {
-            System.out.println(input);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
                     "Failed to encrypt data " + input + " " + e.getMessage());
         }
@@ -52,27 +50,10 @@ public class EncryptionService {
                     .decode(cipherText));
             return new String(plainText);
         } catch (Exception e) {
-            System.out.println(cipherText);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
                     "Failed to decrypt data " + cipherText + "\n " + e.getMessage());
         }
     }
-
-    public GeneratedAccountDTO encryptBankAccountCreateDTO(GeneratedAccountDTO generatedAccountDTO) {
-
-        IvParameterSpec iv = generateIv();
-
-        String accountNumber = generatedAccountDTO.getAccountNumber();
-        String cvv = generatedAccountDTO.getCvv();
-        String balance = generatedAccountDTO.getBalance();
-
-        generatedAccountDTO.setCvv(encrypt(cvv, secretKey, iv));
-        generatedAccountDTO.setAccountNumber(encrypt(accountNumber, secretKey, iv));
-        generatedAccountDTO.setBalance(encrypt(String.valueOf(balance), secretKey, iv));
-        generatedAccountDTO.setIv(iv.getIV());
-        return generatedAccountDTO;
-    }
-
 
     public BankAccount encryptBankAccount(BankAccount bankAccount) {
 
@@ -124,7 +105,6 @@ public class EncryptionService {
         bankUser.setLastName(encrypt(lastName, secretKey, iv));
         bankUser.setPhoneNumber(encrypt(phoneNumber, secretKey, iv));
         bankUser.setIv(iv.getIV());
-        System.out.println(bankUser);
         return bankUser;
     }
 

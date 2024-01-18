@@ -4,6 +4,8 @@ import {TransferService} from "../shared/services/bank-services/transfer.service
 import {TokenService} from "../shared/services/token.service";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {PartialPasswordComponent} from "../partial-password/partial-password.component";
 
 export function lettersAndSpaceValidator(control: { value: string; }) {
 
@@ -46,7 +48,8 @@ export class CreateTransferComponent {
               private transferService: TransferService,
               private tokenService: TokenService,
               private toastr: ToastrService,
-              private router: Router) { }
+              private router: Router,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.bankTransferForm = this.fb.group({
@@ -59,23 +62,39 @@ export class CreateTransferComponent {
   }
 
   submitTransferForm() {
+
     if (this.bankTransferForm.valid) {
-      // Handle the logic for sending the bank transfer
-      const formValues = this.bankTransferForm.value;
-      const jwtToken = this.tokenService.getToken();
-      this.transferService.create(this.bankTransferForm.value, jwtToken).subscribe(
-        success => {
-          if (success) {
-            this.toastr.success('Transfer sent successfully', 'Success');
-            this.router.navigate(['/protected-home']);
-          } else {
-            this.toastr.error('Failed to make the transfer.', 'Failed');
-          }
-        },
-        error => {
-          this.toastr.error('Failed to make the transfer', 'Failed');
+
+      const dialogRef = this.dialog.open(PartialPasswordComponent, {
+        width: '500px',
+        disableClose: true,
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+
+        if (result === 200) {
+
+          const formValues = this.bankTransferForm.value;
+          const jwtToken = this.tokenService.getToken();
+          this.transferService.create(this.bankTransferForm.value, jwtToken).subscribe(
+            success => {
+              if (success) {
+                this.toastr.success('Transfer sent successfully', 'Success');
+                this.router.navigate(['/protected-home']);
+              } else {
+                this.toastr.error('Failed to make the transfer.', 'Failed');
+              }
+            },
+            error => {
+              this.toastr.error('Failed to make the transfer', 'Failed');
+            }
+          );
+
+        } else {
+          this.toastr.error('Failed to authenticate.', 'Unauthorized');
         }
-      );
+      });
+
     } else {
       // Handle invalid form
       console.log('Form is invalid. Please check the fields.');

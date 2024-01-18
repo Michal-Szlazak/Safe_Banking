@@ -13,13 +13,6 @@ import safe.bank.app.bankservice.entities.BankUser;
 import safe.bank.app.bankservice.mappers.BankAccountMapper;
 import safe.bank.app.bankservice.repositories.BankAccountRepository;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,7 +53,9 @@ public class BankAccountService {
     public List<BankAccount> getBankAccounts(UUID userId) {
         BankUser encryptedBankUser = bankUserService.getUser(userId);
         BankUser decryptedBankUser = encryptionService.decryptBankUser(encryptedBankUser);
-        return bankAccountRepository.findAllByBankUser(decryptedBankUser);
+        List<BankAccount> bankAccounts = bankAccountRepository.findAllByBankUser(decryptedBankUser);
+        encryptionService.encryptBankUser(decryptedBankUser);
+        return bankAccounts;
     }
 
     public BankAccount getBankAccountByAccountNumber(String accountNumber) {

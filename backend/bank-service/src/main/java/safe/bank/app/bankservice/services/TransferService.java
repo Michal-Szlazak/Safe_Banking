@@ -2,8 +2,6 @@ package safe.bank.app.bankservice.services;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -28,8 +26,6 @@ public class TransferService {
     private final TransferMapper transferMapper;
     private final EncryptionService encryptionService;
 
-    private final Logger logger = LoggerFactory.getLogger(Logger.class);
-
     @Transactional
     public void sendTransfer(TransferCreateDTO transferCreateDTO, UUID userId) {
 
@@ -43,16 +39,13 @@ public class TransferService {
 
         BankAccount encryptedSenderAccount = bankAccountService.getBankAccountByAccountNumber(
                 transferCreateDTO.getSenderAccount());
-        logger.info("encrypted sender account " + encryptedSenderAccount);
         BankAccount decryptedSenderAccount = encryptionService.decryptBankAccount(encryptedSenderAccount);
-        logger.info("decrypted sender account " + decryptedSenderAccount);
 
         BigDecimal senderAccountBalance = new BigDecimal(decryptedSenderAccount.getBalance());
         BigDecimal receiverAccountBalance = new BigDecimal(decryptedReceiverAccount.getBalance());
 
         if (senderAccountBalance.compareTo(transferCreateDTO.getAmount()) >= 0) {
 
-            logger.info("Processing transfer");
             decryptedSenderAccount.setBalance(senderAccountBalance
                     .subtract(transferCreateDTO.getAmount()).toString());
             decryptedReceiverAccount.setBalance(receiverAccountBalance

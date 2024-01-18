@@ -25,7 +25,8 @@ export class RegisterService {
       'Content-Type': 'application/json',
     });
 
-    return this.http.post(this.apiUrl, registerData, { headers, observe: 'response' })
+    return this.http.post(this.apiUrl, registerData, { headers:{skip:"true"}
+      , observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           // Check the response status code

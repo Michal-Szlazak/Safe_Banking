@@ -14,10 +14,10 @@ export class ForgotPasswordService {
 
   sendEmail(email: string): Observable<boolean> {
     const requestBody = { email: email };
-    return this.http.post(this.apiUri, requestBody, { observe: 'response' }).pipe(
+    return this.http.post(this.apiUri, requestBody, { headers:{skip:"true"},
+      observe: 'response' }).pipe(
       map((response: HttpResponse<any>) => {
         // Check the response status code
-        console.log('Response:', response);
         const statusCode = response.status;
         return statusCode === 200;
       })

@@ -3,7 +3,6 @@ package safe.bank.app.bankservice.services;
 import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import safe.bank.app.bankservice.dtos.BankAccountCreateDto;
 import safe.bank.app.bankservice.dtos.GeneratedAccountDTO;
 import safe.bank.app.bankservice.repositories.BankAccountRepository;
 

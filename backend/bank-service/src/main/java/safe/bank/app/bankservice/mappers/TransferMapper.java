@@ -6,11 +6,9 @@ import safe.bank.app.bankservice.dtos.TransferCreateDTO;
 import safe.bank.app.bankservice.dtos.TransferGetDTO;
 import safe.bank.app.bankservice.entities.BankAccount;
 import safe.bank.app.bankservice.entities.Transfer;
-import safe.bank.app.bankservice.services.EncryptionService;
 
 @Mapper
 public interface TransferMapper {
-
     @Mapping(target = "iv", ignore = true)
     Transfer toEntity(TransferCreateDTO transferCreateDTO,
                       BankAccount sender,

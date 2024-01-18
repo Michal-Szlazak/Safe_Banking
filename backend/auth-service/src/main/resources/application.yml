@@ -1,13 +1,39 @@
 server:
   port: 8082
+  ssl:
+    enabled: true
+    key-store: classpath:auth.jks
+    key-store-password: authservice
+    key-alias: auth
+    key-store-type: JKS
+    key-store-provider: SUN
+    trust-store: classpath:auth.jks
+    trust-store-password: authservice
+    trust-store-type: JKS
 
 logging:
   level:
-    org.springframework.web: DEBUG
-    org.hibernate: ERROR
-    org.springframework.security: DEBUG
+    org.springframework.web: info
+    org.hibernate: info
+    org.springframework.security: info
 
 spring:
+
+  datasource:
+    url: jdbc:postgresql://auth-db:5432/auth-db
+    username: postgres
+    password: postgres
+
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+
   security:
     oauth2:
       client:
@@ -31,21 +57,22 @@ spring:
         jwt:
           jwk-set-uri: ${keycloak-client.server-url}/realms/${keycloak-client.realm}/protocol/openid-connect/certs
           issuer-uri: http://keycloak:8080/realms/SafeBankApp
+
+
 keycloak-client:
   server-url: http://keycloak:8080
   realm: SafeBankApp
-
 
 keycloak:
   master-realm: master
   client-id: admin-cli
   client-secret: 0G1ce0uHFDEJRcVD3qG4pDlj3YF8ZDTW
   scope: openid
-  authorization-grant-type: password
-  user-info-uri: ${keycloak-client.server-url}/realms/SafeBankApp/protocol/openid-connect/userinfo
   token-uri: ${keycloak-client.server-url}/realms/SafeBankApp/protocol/openid-connect/token
-  jwk-set-uri: ${keycloak-client.server-url}/realms/SafeBankApp/protocol/openid-connect/certs
   server-url: ${keycloak-client.server-url}/
   realm: SafeBankApp
   admin: admin
   admin-password: admin
+
+signature-service:
+  secret: mySecret

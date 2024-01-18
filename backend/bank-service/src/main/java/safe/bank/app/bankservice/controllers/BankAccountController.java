@@ -26,7 +26,8 @@ public class BankAccountController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createBankAccount(@RequestBody BankAccountCreateDto bankAccountCreateDto, JwtAuthenticationToken token) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+    public void createBankAccount(@RequestBody BankAccountCreateDto bankAccountCreateDto,
+                                  JwtAuthenticationToken token) {
         String userId = token.getName();
         bankAccountService.createBankAccount(bankAccountCreateDto, UUID.fromString(userId));
     }

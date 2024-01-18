@@ -11,51 +11,25 @@ export class TokenService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getToken(): string {
-    const token = localStorage.getItem('access_token');
-
-    if(!this.isTokenExpired(token)) {
-      return localStorage.getItem('access_token');
-    } else {
-
-      const refresh_token = localStorage.getItem('refresh_token');
-
-      if(this.isRefreshTokenExpired(refresh_token)) {
-        this.router.navigate(['/login']);
-      }
-
-      this.getNewToken(refresh_token).subscribe({
-        next: (success) => {
-          if (success) {
-            console.log('Refresh successful');
-            return localStorage.getItem('access_token');
-          } else {
-            console.error('Refresh failed');
-            this.router.navigate(['/login']);
-          }
-        },
-        error: (err) => {
-          console.error("There was an error while trying to get the token.");
-          this.router.navigate(['/login']);
-          return "expired";
-        }
-      });
-    }
+  isUserLoggedIn(): boolean {
+    return !this.isRefreshTokenExpired();
   }
 
-  private isTokenExpired(token: string): boolean {
-    // Extract the expiration date from the token and convert it to a Date object
+  getToken(): string {
+    return this.getAccessToken();
+  }
+
+  private isTokenExpired(): boolean {
     const expirationDate = new Date(localStorage.getItem("expires_in"));
     return expirationDate < new Date();
   }
 
-  private isRefreshTokenExpired(token: string): boolean {
-    // Extract the expiration date from the token and convert it to a Date object
+  private isRefreshTokenExpired(): boolean {
     const expirationDate = new Date(localStorage.getItem("refresh_expires_in"));
     return expirationDate < new Date();
   }
 
-  private getNewToken(refresh_token: string) : Observable<any> {
+  public getNewToken(refresh_token: string) : Observable<any> {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -78,7 +52,7 @@ export class TokenService {
         localStorage.setItem('refresh_token', response.refresh_token);
         localStorage.setItem('expires_in', refreshTokenExpiration.toString());
 
-        return true;
+        return response.access_token;
       }),
       catchError((error: any) => {
         console.error('Refresh error:', error);
@@ -87,6 +61,34 @@ export class TokenService {
     );
 
 
+  }
+
+
+  getAccessToken(): string | null {
+    if(this.isTokenExpired()) {
+      return null;
+    }
+    return localStorage.getItem('access_token');
+  }
+
+  setAccessToken(token: string): void {
+    localStorage.setItem('access_token', token);
+  }
+
+  getRefreshToken(): string | null {
+    if(this.isRefreshTokenExpired()) {
+      return null;
+    }
+    return localStorage.getItem('refresh_token');
+  }
+
+  setRefreshToken(token: string): void {
+    localStorage.setItem('refresh_token', token);
+  }
+
+  clearTokens(): void {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
   }
 
 }

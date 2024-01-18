@@ -24,8 +24,8 @@ export class LogoutService {
         return of(true);
       }),
       catchError((error: any) => {
-        console.error('Login error:', error);
-        return of(false);
+        localStorage.clear();
+        return of(true);
       })
     );
   }

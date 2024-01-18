@@ -21,20 +21,20 @@ export class LoginService {
       'Content-Type': 'application/json',
     });
 
-    return this.http.post<TokenDTO>(`${this.apiUrl}`, loginData, { headers }).pipe(
+    return this.http.post<TokenDTO>(`${this.apiUrl}`, loginData, { headers:{skip:"true"} }).pipe(
       map((response: TokenDTO) => {
 
         const currentTime = new Date();
         const accessTokenExpiration = new Date(
-          currentTime.getTime() + parseInt(response.expires_in) * 1000); // Convert seconds to milliseconds
+          currentTime.getTime() + parseInt(response.expires_in) * 30); // Convert seconds to milliseconds
         const refreshTokenExpiration = new Date(
-          currentTime.getTime() + parseInt(response.refresh_expires_in) * 1000);
+          currentTime.getTime() + parseInt(response.refresh_expires_in) * 30);
 
         localStorage.setItem('access_token', response.access_token);
         localStorage.setItem('expires_in', accessTokenExpiration.toString());
         localStorage.setItem('refresh_token', response.refresh_token);
         localStorage.setItem('refresh_expires_in', refreshTokenExpiration.toString());
-
+        console.log(refreshTokenExpiration.toString());
         return true;
       }),
       catchError((error: any) => {

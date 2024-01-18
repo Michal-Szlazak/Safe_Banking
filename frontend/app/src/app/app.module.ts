@@ -7,7 +7,7 @@ import {RouterModule, Routes} from "@angular/router";
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
 import { SuccessfulRegisterComponent } from './successful-register/successful-register.component';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
@@ -20,6 +20,10 @@ import {ToastrModule} from "ngx-toastr";
 import { AccountListComponent } from './account-list/account-list.component';
 import { CreateTransferComponent } from './create-transfer/create-transfer.component';
 import { TransferListComponent } from './transfer-list/transfer-list.component';
+import { PartialPasswordComponent } from './partial-password/partial-password.component';
+import {TokenInterceptor} from "./shared/services/token-interceptor";
+import {ForgotEmailFormComponent} from "./forgot-email-form/forgot-email-form.component";
+import {ForgotEmailSentComponent} from "./forgot-email-sent/forgot-email-sent.component";
 
 
 const appRoutes: Routes = [
@@ -27,6 +31,8 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'successful-register', component: SuccessfulRegisterComponent },
+  { path: 'forgot-email-form', component: ForgotEmailFormComponent },
+  { path: 'forgot-password-email-sent', component: ForgotEmailSentComponent },
   { path: 'protected-home',
     canActivate: [canActivate],
     canActivateChild: [canActivateChild],
@@ -51,6 +57,10 @@ const appRoutes: Routes = [
       {
         path: 'transfer-list',
         component: TransferListComponent,
+      },
+      {
+        path: 'partial-password',
+        component: PartialPasswordComponent,
       }
     ],
     component: ProtectedHomeComponent
@@ -69,7 +79,9 @@ const appRoutes: Routes = [
     ProtectedHomeComponent,
     AccountListComponent,
     CreateTransferComponent,
-    TransferListComponent
+    TransferListComponent,
+    PartialPasswordComponent,
+    ForgotEmailFormComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +93,13 @@ const appRoutes: Routes = [
     MatCardModule,
     ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

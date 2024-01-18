@@ -5,6 +5,7 @@ import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,6 +24,7 @@ public class RealmResourceBuilder {
     @Value("${keycloak.admin-password}")
     private String adminPassword;
 
+    @Bean
     public RealmResource realmResource() {
         Keycloak keycloak = KeycloakBuilder.builder()
                 .grantType(OAuth2Constants.PASSWORD)
@@ -35,4 +37,6 @@ public class RealmResourceBuilder {
 
         return keycloak.realm(appRealm);
     }
+
+
 }

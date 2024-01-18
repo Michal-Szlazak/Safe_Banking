@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import safe.bank.app.authservice.controller_advice.exceptions.UserCreationException;
+import safe.bank.app.authservice.dtos.ResetPasswordDTO;
 import safe.bank.app.authservice.dtos.UserLoginDTO;
 import safe.bank.app.authservice.dtos.UserPostDTO;
 import safe.bank.app.authservice.services.KeycloakService;
@@ -45,7 +46,7 @@ public class UserPublicController {
 
     @PostMapping("/forgotPassword")
     @ResponseStatus(HttpStatus.OK)
-    public void forgotPassword(@RequestParam(name = "email") String email) {
-        keycloakService.forgotPasswordEmail(email);
+    public void forgotPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
+        keycloakService.forgotPasswordEmail(resetPasswordDTO.getEmail());
     }
 }

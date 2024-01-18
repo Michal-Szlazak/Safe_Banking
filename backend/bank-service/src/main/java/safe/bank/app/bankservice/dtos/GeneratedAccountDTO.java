@@ -3,7 +3,6 @@ package safe.bank.app.bankservice.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 import java.time.Instant;
 
