@@ -64,6 +64,7 @@ services:
     networks:
       - net-gateway
       - net-frontend
+      - net-auth
 
   auth-db:
     container_name: auth-db
