@@ -12,7 +12,7 @@ import safe.bank.app.authservice.dtos.BankUserDTO;
 @Service
 public class BankService {
 
-    private static final String BACKEND_SERVICE_URI = "https://bank-service:8083";
+    private static final String BACKEND_SERVICE_URI = "http://bank-service:8083";
     private final WebClient webClient;
 
     public BankService() {

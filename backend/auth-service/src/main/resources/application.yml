@@ -1,15 +1,5 @@
 server:
   port: 8082
-  ssl:
-    enabled: true
-    key-store: classpath:auth.jks
-    key-store-password: authservice
-    key-alias: auth
-    key-store-type: JKS
-    key-store-provider: SUN
-    trust-store: classpath:auth.jks
-    trust-store-password: authservice
-    trust-store-type: JKS
 
 logging:
   level:

@@ -13,11 +13,11 @@ public class RoutingConfig {
         return builder.routes()
                 .route("bank-service", r -> r
                         .path("/api/bank/**")
-                        .uri("https://bank-service:8083")
+                        .uri("http://bank-service:8083")
                 )
                 .route("auth-service", r -> r
                         .path("/api/auth/**")
-                        .uri("https://auth-service:8082/")
+                        .uri("http://auth-service:8082/")
                 )
                 .build();
     }

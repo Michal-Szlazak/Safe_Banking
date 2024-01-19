@@ -1,16 +1,5 @@
 server:
-  port:
-  - 8483
-  ssl:
-    enabled: true
-    key-store: classpath:gateway.jks
-    key-store-password: gateway
-    key-alias: gateway
-    key-store-type: JKS
-    key-store-provider: SUN
-    trust-store: classpath:gateway.jks
-    trust-store-password: gateway
-    trust-store-type: JKS
+  port: 8083
 
 keycloak-client:
   server-url: http://keycloak:8080
