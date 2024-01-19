@@ -1,15 +1,7 @@
 server:
   port: 8082
   ssl:
-    enabled: true
-    key-store: classpath:auth.jks
-    key-store-password: authservice
-    key-alias: auth
-    key-store-type: JKS
-    key-store-provider: SUN
-    trust-store: classpath:auth.jks
-    trust-store-password: authservice
-    trust-store-type: JKS
+    bundle: "auth-service"
 
 logging:
   level:
@@ -18,6 +10,25 @@ logging:
     org.springframework.security: info
 
 spring:
+  ssl:
+    bundle:
+      jks:
+        auth-service:
+          key:
+            alias: "auth-service"
+            password: "auth-service"
+          keystore:
+            location: "classpath:auth-service.p12"
+            password: "auth-service"
+            type: "PKCS12"
+          truststore:
+            location: "classpath:auth-service.jks"
+            password: "auth-service"
+      pem:
+        client:
+          truststore:
+            certificate: "classpath:auth-service.crt"
+
 
   datasource:
     url: jdbc:postgresql://auth-db:5432/auth-db

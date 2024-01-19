@@ -1,16 +1,7 @@
 server:
-  port:
-  - 8483
+  port: 8083
   ssl:
-    enabled: true
-    key-store: classpath:gateway.jks
-    key-store-password: gateway
-    key-alias: gateway
-    key-store-type: JKS
-    key-store-provider: SUN
-    trust-store: classpath:gateway.jks
-    trust-store-password: gateway
-    trust-store-type: JKS
+    bundle: "bank-service"
 
 keycloak-client:
   server-url: http://keycloak:8080
@@ -22,6 +13,23 @@ logging:
     org.hibernate: ERROR
 
 spring:
+  ssl:
+    bundle:
+      jks:
+        bank-service:
+          key:
+            alias: "bank-service"
+          keystore:
+            location: "classpath:bank-service.p12"
+            password: "bank-service"
+            type: "PKCS12"
+          truststore:
+            location: "classpath:bank-service.jks"
+            password: "bank-service"
+      pem:
+        client:
+          truststore:
+            certificate: "classpath:bank-service.crt"
 
   security:
     oauth2:

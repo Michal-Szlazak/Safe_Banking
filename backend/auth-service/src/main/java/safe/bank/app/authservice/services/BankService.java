@@ -1,5 +1,8 @@
 package safe.bank.app.authservice.services;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientSsl;
+import org.springframework.boot.ssl.SslBundle;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +18,9 @@ public class BankService {
     private static final String BACKEND_SERVICE_URI = "https://bank-service:8083";
     private final WebClient webClient;
 
-    public BankService() {
-        this.webClient = WebClient.create(BACKEND_SERVICE_URI).mutate().build();
+    public BankService(WebClientSsl ssl) {
+        this.webClient = WebClient.builder().baseUrl(BACKEND_SERVICE_URI)
+                .apply(ssl.fromBundle("auth-service")).build();
     }
 
     public Mono<ResponseEntity<String>> createBankUser(BankUserDTO bankUserDTO) {
