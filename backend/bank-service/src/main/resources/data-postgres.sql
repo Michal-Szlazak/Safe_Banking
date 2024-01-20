@@ -9,8 +9,8 @@ $$
 
     BEGIN
         INSERT INTO bank_user (user_id, first_name, last_name, phone_number, iv)
-        VALUES (user_id_1, 'Ih/UZ5tRXbmbd0ujg5V3aQ==', '/lQFNhDcDsCUoKlVdShM/Q==', 'OjEOYJVDGlDvCUJ7izv8MQ==', '0x92865D2160D3EFC788867DCBC437B99F'),
-        (user_id_2, 'oG6glxRkoIYzQtfYSGPiuQ==', 'pBubAdrESjcskqUZ5LIlNw==', 'eVBkxJ8y9fV3yBfjQju8rA==', '0x02D7DF6F8915C47A1AB67C71E113208B');
+        VALUES (user_id_1, 'Ih/UZ5tRXbmbd0ujg5V3aQ==', '/lQFNhDcDsCUoKlVdShM/Q==', 'OjEOYJVDGlDvCUJ7izv8MQ==', E'\\x92865D2160D3EFC788867DCBC437B99F'),
+        (user_id_2, 'oG6glxRkoIYzQtfYSGPiuQ==', 'pBubAdrESjcskqUZ5LIlNw==', 'eVBkxJ8y9fV3yBfjQju8rA==', E'\\x02D7DF6F8915C47A1AB67C71E113208B');
 
         INSERT INTO bank_account (account_id, user_id, account_name, account_number, cvv, expires_at, balance, version, iv)
         VALUES (account_id_1, user_id_1, 'ImportedForJohn', 'PL12345678901234567890123456', 'bgmylOOjuOlmADinIe7OKA==', '2027-01-05 00:00:00'::timestamp, '+AEyVFk1Lphy6Hv7QvXkfw==', 1, E'\\x749AA933711986B49C7D2A0BECB006C1'),

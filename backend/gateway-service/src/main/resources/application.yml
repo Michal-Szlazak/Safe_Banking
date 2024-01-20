@@ -1,5 +1,15 @@
 server:
   port: 8081
+  ssl:
+    enabled: true
+    key-store: classpath:gateway.jks
+    key-store-password: gateway
+    key-alias: gateway
+    key-store-type: JKS
+    key-store-provider: SUN
+    trust-store: classpath:gateway.jks
+    trust-store-password: gateway
+    trust-store-type: JKS
 
 logging:
   level:

@@ -35,6 +35,12 @@ spring:
     username: postgres
     password: postgres
 
+  sql:
+    init:
+      platform: postgres
+      mode: always
+      separator: "^^^ END OF SCRIPT ^^^"
+
   jpa:
     show-sql: false
     properties:
