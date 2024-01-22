@@ -41,7 +41,7 @@
             <div *ngIf="registerForm.controls['email']?.errors?.required">Email is required.</div>
             <div *ngIf="registerForm.controls['email']?.errors?.minlength">Email must be at least 8 characters.</div>
             <div *ngIf="registerForm.controls['email']?.errors?.maxlength">Email cannot exceed 30 characters.</div>
-            <div *ngIf="registerForm.controls['lastName']?.errors?.invalidInput">Invalid email.</div>
+            <div *ngIf="registerForm.controls['email']?.errors?.invalidInput">Invalid email.</div>
           </div>
         </div>
       </div>
@@ -70,6 +70,9 @@
             <div *ngIf="registerForm.controls['password']?.errors?.required">Password is required.</div>
             <div *ngIf="registerForm.controls['password']?.errors?.minlength">Password must be at least 8 characters.</div>
             <div *ngIf="registerForm.controls['password']?.errors?.maxlength">Password cannot be longer than 20 characters.</div>
+            <div *ngIf="registerForm.get('password').hasError('passwordValidator')">Password should contain lowercase and uppercase letter,
+            a digit and special sign.</div>
+            <div *ngIf="registerForm.get('password').hasError('noWhiteSpaceValidator')">Password can have white space.</div>
             <div *ngIf="registerForm.get('password').hasError('weakPassword')">Password is too weak.</div>
           </div>
         </div>

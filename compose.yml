@@ -74,6 +74,9 @@ services:
       POSTGRES_DB: auth-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_SSL_MODE: require
+      POSTGRES_SSL_KEY: /backend/tls/auth-db.key
+      POSTGRES_SSL_CERT: /etc/postgresql/auth-db.crt
     ports:
       - '5432:5432'
     volumes:
@@ -90,6 +93,9 @@ services:
       POSTGRES_DB: bankdb
       POSTGRES_USER: sa
       POSTGRES_PASSWORD: sa
+      POSTGRES_SSL_MODE: require
+      POSTGRES_SSL_KEY: /backend/tls/bank-db.key
+      POSTGRES_SSL_CERT: /etc/postgresql/bank-db.crt
     ports:
       - '5433:5432'
     volumes:

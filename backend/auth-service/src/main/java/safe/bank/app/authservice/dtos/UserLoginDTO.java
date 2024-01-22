@@ -1,5 +1,6 @@
 package safe.bank.app.authservice.dtos;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Value;
@@ -10,9 +11,10 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class UserLoginDTO {
 
-    @NotBlank
+    @NotBlank(message = "Email cannot be blank")
+    @Email(message = "Invalid email format")
     String email;
 
-    @NotBlank
+    @NotBlank(message = "Password cannot be blank")
     String password;
 }

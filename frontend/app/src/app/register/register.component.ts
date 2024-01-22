@@ -19,6 +19,28 @@ export function onlyLettersValidator(control: { value: string; }) {
   return isValid ? null : { 'onlyLettersValidator': true };
 }
 
+export function passwordValidator(control: {value: string; }) {
+  const value: string = control.value;
+
+  // Check for at least one uppercase letter, one lowercase letter, one digit, and one special character
+  const hasUppercase = /[A-Z]/.test(value);
+  const hasLowercase = /[a-z]/.test(value);
+  const hasDigit = /\d/.test(value);
+  const hasSpecialChar = /[!@#$%^&*()-_=+{}[\]:;'",.<>/?\\|]/.test(value);
+
+  // Return null if all conditions are met, indicating a valid password
+  if (hasUppercase && hasLowercase && hasDigit && hasSpecialChar) {
+    return null;
+  } else {
+    // Return an object with an error key if any condition is not met
+    return { 'passwordValidator': true };
+  }
+}
+
+export function noWhiteSpaceValidator(control: {value: string; }) {
+  return !/\\s/.test(control.value);
+}
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -35,7 +57,8 @@ export class RegisterComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20), onlyLettersValidator]],
       email: ['', [Validators.required, Validators.maxLength(20), Validators.email]],
       phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20), entropyValidator]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20), entropyValidator, passwordValidator
+      ,noWhiteSpaceValidator]],
       confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
     }, { validator: this.passwordMatchValidator } as AbstractControlOptions);
   }

@@ -46,7 +46,7 @@ public class UserPublicController {
 
     @PostMapping("/forgotPassword")
     @ResponseStatus(HttpStatus.OK)
-    public void forgotPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
+    public void forgotPassword(@RequestBody @Valid ResetPasswordDTO resetPasswordDTO) {
         keycloakService.forgotPasswordEmail(resetPasswordDTO.getEmail());
     }
 }

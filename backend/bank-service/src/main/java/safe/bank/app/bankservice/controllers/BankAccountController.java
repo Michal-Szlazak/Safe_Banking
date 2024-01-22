@@ -1,5 +1,6 @@
 package safe.bank.app.bankservice.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -26,7 +27,7 @@ public class BankAccountController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createBankAccount(@RequestBody BankAccountCreateDto bankAccountCreateDto,
+    public void createBankAccount(@RequestBody @Valid BankAccountCreateDto bankAccountCreateDto,
                                   JwtAuthenticationToken token) {
         String userId = token.getName();
         bankAccountService.createBankAccount(bankAccountCreateDto, UUID.fromString(userId));

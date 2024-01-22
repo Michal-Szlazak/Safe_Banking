@@ -1,5 +1,6 @@
 package safe.bank.app.bankservice.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class TransferController {
 
     private final TransferService transferService;
     @PostMapping
-    public void sendTransaction(@RequestBody TransferCreateDTO transactionCreateDTO,
+    public void sendTransaction(@RequestBody @Valid TransferCreateDTO transactionCreateDTO,
                                 JwtAuthenticationToken token) {
         String userId = token.getName();
         transferService.sendTransfer(transactionCreateDTO, UUID.fromString(userId));

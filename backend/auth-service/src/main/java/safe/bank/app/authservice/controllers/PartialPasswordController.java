@@ -1,5 +1,6 @@
 package safe.bank.app.authservice.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -27,7 +28,7 @@ public class PartialPasswordController {
 
     @PostMapping("/api/auth/public/partial-password")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createPartialPasswordSet(PartialPasswordCreateDTO partialPasswordCreateDTO) {
+    public void createPartialPasswordSet(@Valid PartialPasswordCreateDTO partialPasswordCreateDTO) {
 
         partialPasswordService.createPartialPasswordSet(partialPasswordCreateDTO.password(),
                 partialPasswordCreateDTO.userId());

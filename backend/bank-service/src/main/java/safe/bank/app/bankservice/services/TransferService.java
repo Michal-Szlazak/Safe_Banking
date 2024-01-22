@@ -1,9 +1,9 @@
 package safe.bank.app.bankservice.services;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import safe.bank.app.bankservice.dtos.TransferCreateDTO;
 import safe.bank.app.bankservice.dtos.TransferGetDTO;
@@ -26,7 +26,7 @@ public class TransferService {
     private final TransferMapper transferMapper;
     private final EncryptionService encryptionService;
 
-    @Transactional
+    @Transactional()
     public void sendTransfer(TransferCreateDTO transferCreateDTO, UUID userId) {
 
         verifyUserAccessToAccount(userId, transferCreateDTO);
@@ -69,7 +69,7 @@ public class TransferService {
 
     }
 
-    private void verifyUserAccessToAccount(UUID userId, TransferCreateDTO transferCreateDTO) {
+    public void verifyUserAccessToAccount(UUID userId, TransferCreateDTO transferCreateDTO) {
 
         List<BankAccount> encryptedSenderAccounts = bankAccountService.getBankAccounts(userId);
         List<BankAccount> decryptedSenderAccounts = encryptedSenderAccounts.stream()
@@ -81,8 +81,8 @@ public class TransferService {
         }
         encryptedSenderAccounts.forEach(encryptionService::encryptBankAccount);
     }
-
-    private void verifyGivenReceiverNameWithReceiverAccount(TransferCreateDTO transferCreateDTO) {
+    
+    public void verifyGivenReceiverNameWithReceiverAccount(TransferCreateDTO transferCreateDTO) {
 
         BankAccount encryptedReceiverAccount = bankAccountService.getBankAccountByAccountNumber(
                 transferCreateDTO.getReceiverAccount());
