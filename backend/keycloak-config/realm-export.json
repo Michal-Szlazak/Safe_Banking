@@ -503,7 +503,7 @@
       "credentials": [
         {
           "type": "password",
-          "value": "password",
+          "value": "password1234",
           "temporary": false
         }
       ]
@@ -518,7 +518,7 @@
       "credentials": [
         {
           "type": "password",
-          "value": "password",
+          "value": "password1234",
           "temporary": false
         }
       ]

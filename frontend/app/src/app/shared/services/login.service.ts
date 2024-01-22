@@ -26,9 +26,9 @@ export class LoginService {
 
         const currentTime = new Date();
         const accessTokenExpiration = new Date(
-          currentTime.getTime() + parseInt(response.expires_in) * 30); // Convert seconds to milliseconds
+          currentTime.getTime() + parseInt(response.expires_in) * 1000); // Convert seconds to milliseconds
         const refreshTokenExpiration = new Date(
-          currentTime.getTime() + parseInt(response.refresh_expires_in) * 30);
+          currentTime.getTime() + parseInt(response.refresh_expires_in) * 1000);
 
         localStorage.setItem('access_token', response.access_token);
         localStorage.setItem('expires_in', accessTokenExpiration.toString());

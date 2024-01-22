@@ -12,6 +12,7 @@ import safe.bank.app.bankservice.entities.Transfer;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Base64;
 
 @Service
@@ -51,7 +52,7 @@ public class EncryptionService {
             return new String(plainText);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Failed to decrypt data " + cipherText + "\n " + e.getMessage());
+                    "Failed to decrypt data " + cipherText + "\n " + e.getMessage() + Base64.getEncoder().encodeToString(iv.getIV()));
         }
     }
 

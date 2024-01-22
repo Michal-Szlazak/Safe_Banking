@@ -21,7 +21,10 @@ spring:
     gateway:
       httpclient:
         ssl:
-          useInsecureTrustManager: true
+          trusted-x509-certificates:
+            - "classpath:auth-service.pem"
+            - "classpath:bank-service.pem"
+
       globalcors:
         corsConfigurations:
           '[/**]':

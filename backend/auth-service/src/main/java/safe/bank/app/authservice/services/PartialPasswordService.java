@@ -38,8 +38,11 @@ public class PartialPasswordService {
     private static final int PARTS_NUMBER = 4;
     public void createPartialPasswordSet(String password, UUID userId) {
 
+        SecureRandom secureRandom = new SecureRandom();
+
         Scheme scheme = new Scheme(new SecureRandom(), password.length(), PARTS_NUMBER);
-        byte[] secret = new SecureRandom().toString().getBytes(StandardCharsets.UTF_8);
+        byte[] secret = new byte[32];
+        secureRandom.nextBytes(secret);
         Map<Integer, byte[]> parts = scheme.split(secret);
 
         List<PartialPasswordPart> partsList = new ArrayList<>();
@@ -158,7 +161,7 @@ public class PartialPasswordService {
     private static byte[] generateSalt() {
         // Generating a random salt
         SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
+        byte[] salt = new byte[32];
         random.nextBytes(salt);
         return salt;
     }
