@@ -9,7 +9,7 @@ keycloak-client:
 
 logging:
   level:
-    org.springframework.web: DEBUG
+    org.springframework.web: ERROR
     org.hibernate: ERROR
 
 spring:
@@ -53,7 +53,7 @@ spring:
       separator: "^^^ END OF SCRIPT ^^^"
 
   jpa:
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true

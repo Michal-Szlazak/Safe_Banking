@@ -10,7 +10,6 @@ services:
     build:
       context: ./frontend/app
     ports:
-      - "8085:80"
       - "8443:443"
     networks:
       - net-frontend
@@ -33,7 +32,8 @@ services:
       ports:
         - "8080:8080"
       networks:
-        - net-auth
+        - net-backend
+        - net-authdb
       command:
       - start-dev
       - --import-realm
@@ -44,8 +44,7 @@ services:
       - '8083:8083'
     networks:
       - net-bankdb
-      - net-gateway
-      - net-auth
+      - net-backend
 
   auth-service:
     <<: *service
@@ -53,8 +52,8 @@ services:
     ports:
       - '8082:8082'
     networks:
-      - net-auth
-      - net-gateway
+      - net-backend
+      - net-authdb
 
   api-gateway:
     <<: *service
@@ -62,9 +61,8 @@ services:
     ports:
       - '8081:8081'
     networks:
-      - net-gateway
       - net-frontend
-      - net-auth
+      - net-backend
 
   auth-db:
     container_name: auth-db
@@ -82,7 +80,7 @@ services:
     volumes:
       - auth-db:/var/lib/postgresql/data
     networks:
-      - net-auth
+      - net-authdb
       
 
   bankdb:
@@ -112,7 +110,7 @@ volumes:
     driver: local
 
 networks:
-  net-gateway:
   net-bankdb:
-  net-auth:
+  net-authdb:
+  net-backend:
   net-frontend:

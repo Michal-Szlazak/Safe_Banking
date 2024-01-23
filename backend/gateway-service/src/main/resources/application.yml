@@ -13,8 +13,8 @@ server:
 
 logging:
   level:
-    org.springframework.web: TRACE
-    org.hibernate: TRACE
+    org.springframework.web: ERROR
+    org.hibernate: ERROR
 
 spring:
   cloud:

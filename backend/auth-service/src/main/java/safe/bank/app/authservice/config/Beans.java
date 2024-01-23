@@ -11,9 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.netty.http.client.HttpClient;
-
 import javax.net.ssl.SSLException;
-import java.io.File;
 
 @Configuration
 public class Beans {

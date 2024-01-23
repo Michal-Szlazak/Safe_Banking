@@ -14,8 +14,8 @@ import java.util.List;
 @Service
 public class SignatureService {
 
-//    @Value("${signature-service.secret}")
-    private static String secret = "secret";
+    @Value("${signature-service.secret}")
+    private String secret;
     private static final String ALGORITHM = "HmacSHA256";
 
     public String createDigitalSignature(List<Integer> dataList) {

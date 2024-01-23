@@ -45,7 +45,7 @@ export function noWhiteSpaceValidator(control: {value: string; }) {
   selector: 'app-register',
   templateUrl: './register.component.html',
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   registerForm: FormGroup;
   registerError: boolean = false;
   errorMessage: string = "";
@@ -57,14 +57,10 @@ export class RegisterComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20), onlyLettersValidator]],
       email: ['', [Validators.required, Validators.maxLength(20), Validators.email]],
       phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20), entropyValidator, passwordValidator
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20), passwordValidator
       ,noWhiteSpaceValidator]],
       confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
     }, { validator: this.passwordMatchValidator } as AbstractControlOptions);
-  }
-
-  ngOnInit(): void {
-    // If you have any initialization logic, you can place it here
   }
 
   onSubmit() {

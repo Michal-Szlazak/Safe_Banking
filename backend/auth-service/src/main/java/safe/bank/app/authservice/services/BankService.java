@@ -1,8 +1,6 @@
 package safe.bank.app.authservice.services;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientSsl;
-import org.springframework.boot.ssl.SslBundle;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

@@ -2,12 +2,11 @@ package safe.bank.app.authservice.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import safe.bank.app.authservice.validation.PasswordValidator;
 
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = PasswordValidator.class)
+@Constraint(validatedBy = PasswordConstraintValidator.class)
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordConstraint {

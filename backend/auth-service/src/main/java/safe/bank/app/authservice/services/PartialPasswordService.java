@@ -19,7 +19,6 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.util.*;
@@ -114,7 +113,7 @@ public class PartialPasswordService {
         SecureRandom secureRandom = new SecureRandom();
 
         while(partsIndexes.size() < partialPasswordSet.getK()) {
-            int i = secureRandom.nextInt(1, partialPasswordSet.getN());
+            int i = secureRandom.nextInt(1, partialPasswordSet.getN() + 1);
 
             if(!partsIndexes.contains(i)) {
                 partsIndexes.add(i);

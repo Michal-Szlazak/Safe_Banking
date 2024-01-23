@@ -5,9 +5,9 @@ server:
 
 logging:
   level:
-    org.springframework.web: info
-    org.hibernate: info
-    org.springframework.security: info
+    org.springframework.web: error
+    org.hibernate: error
+    org.springframework.security: error
 
 spring:
   ssl:
@@ -92,4 +92,4 @@ keycloak:
   admin-password: admin
 
 signature-service:
-  secret: mySecret
+  secret: secret
