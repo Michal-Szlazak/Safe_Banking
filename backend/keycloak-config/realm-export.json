@@ -37,14 +37,14 @@
   "duplicateEmailsAllowed": false,
   "resetPasswordAllowed": false,
   "editUsernameAllowed": false,
-  "bruteForceProtected": false,
+  "bruteForceProtected": true,
   "permanentLockout": false,
   "maxFailureWaitSeconds": 900,
   "minimumQuickLoginWaitSeconds": 60,
   "waitIncrementSeconds": 60,
   "quickLoginCheckMilliSeconds": 1000,
   "maxDeltaTimeSeconds": 43200,
-  "failureFactor": 30,
+  "failureFactor": 5,
   "roles": {
     "realm": [
       {
@@ -495,15 +495,30 @@
   "users": [
     {
       "id": "73162244-c3f4-4682-ada1-67bfa54838fe",
-      "username": "user@mail.com",
-      "email": "user@mail.com",
+      "username": "johndoe@mail.com",
+      "email": "johndoe@mail.com",
       "firstName": "John",
       "lastName": "Doe",
       "enabled": true,
       "credentials": [
         {
           "type": "password",
-          "value": "password",
+          "value": "password1234",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "id": "73162245-c3f4-4682-ada1-67bfa54838fe",
+      "username": "janedoe@mail.com",
+      "email": "janedoe@mail.com",
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password1234",
           "temporary": false
         }
       ]
@@ -1352,7 +1367,20 @@
     "xXSSProtection": "1; mode=block",
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
-  "smtpServer": {},
+  "smtpServer": {
+    "replyToDisplayName": "SafeBankApplication",
+    "starttls": "true",
+    "auth": "true",
+    "envelopeFrom": "SafeBankApplication",
+    "ssl": "false",
+    "password": "zqvd bvmx okxe sdta",
+    "port": "587",
+    "replyTo": "safebankapp@gmail.com",
+    "host": "smtp.gmail.com",
+    "from": "safebankapp@gmail.com",
+    "fromDisplayName": "SafeBankApplication",
+    "user": "safebankapp"
+  },
   "eventsEnabled": false,
   "eventsListeners": [
     "jboss-logging"

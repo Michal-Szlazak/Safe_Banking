@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import safe.bank.app.authservice.controller_advice.exceptions.UserCreationException;
+import safe.bank.app.authservice.dtos.ResetPasswordDTO;
 import safe.bank.app.authservice.dtos.UserLoginDTO;
 import safe.bank.app.authservice.dtos.UserPostDTO;
 import safe.bank.app.authservice.services.KeycloakService;
@@ -17,7 +18,7 @@ import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth/user/public")
+@RequestMapping("/api/auth/user/public")
 public class UserPublicController {
 
     private final KeycloakService keycloakService;
@@ -28,7 +29,7 @@ public class UserPublicController {
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String login(@RequestBody UserLoginDTO userLoginDTO) {
+    public String login(@RequestBody @Valid UserLoginDTO userLoginDTO) {
         return keycloakService.login(userLoginDTO.getEmail(), userLoginDTO.getPassword());
     }
 
@@ -41,5 +42,11 @@ public class UserPublicController {
     @PostMapping(value = "/refreshToken")
     public String refreshJwtToken(@RequestHeader(name = "refresh_token") String refreshToken) {
         return keycloakService.refreshJwtToken(refreshToken);
+    }
+
+    @PostMapping("/forgotPassword")
+    @ResponseStatus(HttpStatus.OK)
+    public void forgotPassword(@RequestBody @Valid ResetPasswordDTO resetPasswordDTO) {
+        keycloakService.forgotPasswordEmail(resetPasswordDTO.getEmail());
     }
 }

@@ -1,33 +1,39 @@
 package safe.bank.app.authservice.services;
 
 import jakarta.ws.rs.core.Response;
+import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.resource.RealmResource;
-import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import safe.bank.app.authservice.config.RealmResourceBuilder;
+import reactor.core.publisher.Mono;
 import safe.bank.app.authservice.controller_advice.exceptions.UserCreationException;
+import safe.bank.app.authservice.dtos.BankUserDTO;
 import safe.bank.app.authservice.dtos.UserPostDTO;
 import safe.bank.app.authservice.entities.ErrorResponseEntity;
+import safe.bank.app.authservice.mappers.BankUserMapper;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class KeycloakService {
 
     private final RestTemplate restTemplate;
     private final RealmResource realmResource;
+    private final BankService bankService;
+    private final BankUserMapper bankUserMapper;
+    private final PartialPasswordService partialPasswordService;
+    private static final Logger logger = LoggerFactory.getLogger(LoggerFactory.PROVIDER_PROPERTY_KEY);
 
     @Value("${keycloak.token-uri}")
     private String keycloakTokenUri;
@@ -40,11 +46,6 @@ public class KeycloakService {
 
     @Value("${keycloak.scope}")
     private String scope;
-
-    public KeycloakService(RestTemplate restTemplate, RealmResourceBuilder realmResourceBuilder) {
-        this.restTemplate = restTemplate;
-        realmResource = realmResourceBuilder.realmResource();
-    }
 
     public String login(String username, String password) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
@@ -74,8 +75,15 @@ public class KeycloakService {
                 ErrorResponseEntity responseEntity = response.readEntity(ErrorResponseEntity.class);
                 throw new UserCreationException(responseEntity.getErrorMessage());
             }
+
             String userId = extractUserIdFromResponse(response);
             assignRoles(userId, List.of("USER"));
+
+            registerBankUser(userPostDTO, userId); //What if system fails to create user?
+            partialPasswordService.createPartialPasswordSet(
+                    userPostDTO.getPassword(),
+                    UUID.fromString(userId)
+            );
         }
     }
 
@@ -99,6 +107,10 @@ public class KeycloakService {
                 .stream()
                 .map(RoleRepresentation::toString)
                 .toList();
+    }
+
+    public void forgotPasswordEmail(String email) {
+        logger.info(String.format("Sending email to the user with email: %s", email));
     }
 
     private UserRepresentation getUserRepresentation(UserPostDTO userPostDTO) {
@@ -155,4 +167,17 @@ public class KeycloakService {
         List<String> parts = Arrays.stream(location.split("/")).toList();
         return parts.get(parts.size() - 1);
     }
+
+    private void registerBankUser(UserPostDTO userPostDTO, String userId) {
+
+        BankUserDTO bankUserDTO = bankUserMapper.fromUserToBankUserDTO(userPostDTO);
+        bankUserDTO.setUserId(UUID.fromString(userId));
+
+        Mono<ResponseEntity<String>> responseMono = bankService.createBankUser(bankUserDTO);
+
+        responseMono
+                .map(ResponseEntity::getStatusCode)
+                .block();
+    }
+
 }

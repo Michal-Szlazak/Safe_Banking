@@ -1,12 +1,41 @@
 server:
   port: 8081
+  ssl:
+    enabled: true
+    key-store: classpath:gateway.jks
+    key-store-password: gateway
+    key-alias: gateway
+    key-store-type: JKS
+    key-store-provider: SUN
+    trust-store: classpath:gateway.jks
+    trust-store-password: gateway
+    trust-store-type: JKS
 
 logging:
   level:
-    org.springframework.web: DEBUG
+    org.springframework.web: ERROR
     org.hibernate: ERROR
 
 spring:
+  cloud:
+    gateway:
+      httpclient:
+        ssl:
+          trusted-x509-certificates:
+            - "classpath:auth-service.pem"
+            - "classpath:bank-service.pem"
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "https://localhost:8443"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - OPTIONS
+
   security:
     oauth2:
       client:

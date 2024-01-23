@@ -1,0 +1,22 @@
+<!-- menu-bar.component.html -->
+<div class="bg-gray-800 text-white p-4 h-screen flex flex-col items-center rounded">
+  <div class="mb-4">
+    <a routerLink="" class="text-lg font-bold leading-6 text-gray-200 hover:text-gray-400">
+      Menu
+    </a>
+  </div>
+  <div class="flex flex-col gap-2">
+    <button routerLink="/protected-home/create-account" class="w-full py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded p-4">
+      New Bank Account
+    </button>
+    <button routerLink="/protected-home/create-transfer" class="w-full py-2 bg-green-500 hover:bg-green-700 text-white font-bold rounded">
+      Make Transaction
+    </button>
+    <button routerLink="/protected-home/account-list" class="w-full py-2 bg-indigo-500 hover:bg-indigo-700 text-white font-bold rounded">
+      View Accounts
+    </button>
+    <button routerLink="/protected-home/transfer-list" class="w-full py-2 bg-fuchsia-900 hover:bg-indigo-700 text-white font-bold rounded">
+      Transfers
+    </button>
+  </div>
+</div>

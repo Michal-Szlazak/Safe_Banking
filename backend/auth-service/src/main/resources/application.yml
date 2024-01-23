@@ -1,13 +1,56 @@
 server:
   port: 8082
+  ssl:
+    bundle: "auth-service"
 
 logging:
   level:
-    org.springframework.web: DEBUG
-    org.hibernate: ERROR
-    org.springframework.security: DEBUG
+    org.springframework.web: error
+    org.hibernate: error
+    org.springframework.security: error
 
 spring:
+  ssl:
+    bundle:
+      jks:
+        auth-service:
+          key:
+            alias: "auth-service"
+            password: "auth-service"
+          keystore:
+            location: "classpath:auth-service.p12"
+            password: "auth-service"
+            type: "PKCS12"
+          truststore:
+            location: "classpath:auth-service.jks"
+            password: "auth-service"
+      pem:
+        client:
+          truststore:
+            certificate: "classpath:auth-service.crt"
+
+
+  datasource:
+    url: jdbc:postgresql://auth-db:5432/auth-db
+    username: postgres
+    password: postgres
+
+  sql:
+    init:
+      platform: postgres
+      mode: always
+      separator: "^^^ END OF SCRIPT ^^^"
+
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+
   security:
     oauth2:
       client:
@@ -31,21 +74,22 @@ spring:
         jwt:
           jwk-set-uri: ${keycloak-client.server-url}/realms/${keycloak-client.realm}/protocol/openid-connect/certs
           issuer-uri: http://keycloak:8080/realms/SafeBankApp
+
+
 keycloak-client:
   server-url: http://keycloak:8080
   realm: SafeBankApp
-
 
 keycloak:
   master-realm: master
   client-id: admin-cli
   client-secret: 0G1ce0uHFDEJRcVD3qG4pDlj3YF8ZDTW
   scope: openid
-  authorization-grant-type: password
-  user-info-uri: http://keycloak:8080/realms/SafeBankApp/protocol/openid-connect/userinfo
-  token-uri: http://keycloak:8080/realms/SafeBankApp/protocol/openid-connect/token
-  jwk-set-uri: http://keycloak:8080/realms/SafeBankApp/protocol/openid-connect/certs
-  server-url: http://keycloak:8080/
+  token-uri: ${keycloak-client.server-url}/realms/SafeBankApp/protocol/openid-connect/token
+  server-url: ${keycloak-client.server-url}/
   realm: SafeBankApp
   admin: admin
   admin-password: admin
+
+signature-service:
+  secret: secret
