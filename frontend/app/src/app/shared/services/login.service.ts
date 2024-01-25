@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {catchError, map, Observable, of, throwError} from "rxjs";
 import {TokenDTO} from "../../dtos/TokensDTO";
+import {ToastrService} from "ngx-toastr";
 
 interface LoginData {
   email: string;
@@ -34,7 +35,6 @@ export class LoginService {
         localStorage.setItem('expires_in', accessTokenExpiration.toString());
         localStorage.setItem('refresh_token', response.refresh_token);
         localStorage.setItem('refresh_expires_in', refreshTokenExpiration.toString());
-        console.log(refreshTokenExpiration.toString());
         return true;
       }),
       catchError((error: any) => {

@@ -5,9 +5,9 @@ server:
 
 logging:
   level:
-    org.springframework.web: error
-    org.hibernate: error
-    org.springframework.security: error
+    org.springframework.web: ERROR
+    org.hibernate: ERROR
+    org.springframework.security: ERROR
 
 spring:
   ssl:

@@ -1,5 +1,6 @@
 package safe.bank.app.authservice.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -18,7 +19,6 @@ public class PartialPasswordSet {
     private int k;
     private byte[] secret;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<PartialPasswordPart> parts;
-
 }

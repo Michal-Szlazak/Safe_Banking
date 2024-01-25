@@ -10,13 +10,17 @@ import {
   Validators
 } from "@angular/forms";
 import {Router} from "@angular/router";
-import {entropyValidator} from "./entropy.validator";
-import {ToastrService} from "ngx-toastr";
 
 export function onlyLettersValidator(control: { value: string; }) {
 
   const isValid = /^[a-zA-Z]+$/.test(control.value);
   return isValid ? null : { 'onlyLettersValidator': true };
+}
+
+export function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+  const password = control.get('password')?.value;
+  const confirmPassword = control.get('confirmPassword')?.value;
+  return password === confirmPassword ? null : { passwordMismatch: true };
 }
 
 export function passwordValidator(control: {value: string; }) {
@@ -60,7 +64,7 @@ export class RegisterComponent {
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20), passwordValidator
       ,noWhiteSpaceValidator]],
       confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
-    }, { validator: this.passwordMatchValidator } as AbstractControlOptions);
+    }, { validator: passwordMatchValidator } as AbstractControlOptions);
   }
 
   onSubmit() {
@@ -84,10 +88,6 @@ export class RegisterComponent {
     }
   }
 
-  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password')?.value;
-    const confirmPassword = control.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { passwordMismatch: true };
-  }
+
 }
 
