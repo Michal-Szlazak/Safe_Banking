@@ -45,6 +45,7 @@
   "quickLoginCheckMilliSeconds": 1000,
   "maxDeltaTimeSeconds": 43200,
   "failureFactor": 5,
+  "passwordPolicy": "hashIterations(210000) and hashAlgorithm(pbkdf2-sha512)",
   "roles": {
     "realm": [
       {

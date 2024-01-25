@@ -3,6 +3,7 @@ package safe.bank.app.authservice.services;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
@@ -18,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Mono;
 import safe.bank.app.authservice.controller_advice.exceptions.UserCreationException;
 import safe.bank.app.authservice.dtos.BankUserDTO;
+import safe.bank.app.authservice.dtos.PasswordChangeDTO;
 import safe.bank.app.authservice.dtos.UserPostDTO;
 import safe.bank.app.authservice.entities.ErrorResponseEntity;
 import safe.bank.app.authservice.mappers.BankUserMapper;
@@ -119,7 +121,6 @@ public class KeycloakService {
         user.setLastName(userPostDTO.getLastName());
         user.setEmail(userPostDTO.getEmail());
         user.setEnabled(true);
-
         CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
         credentialRepresentation.setType("password");
         credentialRepresentation.setValue(userPostDTO.getPassword());
@@ -180,4 +181,25 @@ public class KeycloakService {
                 .block();
     }
 
+    public void setNewPassword(PasswordChangeDTO passwordChangeDTO, UUID userId) {
+
+        UsersResource usersResource = realmResource.users();
+        UserResource userResource = usersResource.get(userId.toString());
+
+        String email = userResource.toRepresentation().getEmail();
+        login(email, passwordChangeDTO.getOldPassword());
+        logout(userId.toString());
+
+        CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
+        credentialRepresentation.setType("password");
+        credentialRepresentation.setValue(passwordChangeDTO.getNewPassword());
+        credentialRepresentation.setTemporary(false);
+
+        userResource.resetPassword(credentialRepresentation);
+
+        partialPasswordService.createNewPartialPasswordSet(
+                passwordChangeDTO.getNewPassword(),
+                userId
+        );
+    }
 }

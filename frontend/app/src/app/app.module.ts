@@ -24,6 +24,7 @@ import { PartialPasswordComponent } from './partial-password/partial-password.co
 import {TokenInterceptor} from "./shared/services/token-interceptor";
 import {ForgotEmailFormComponent} from "./forgot-email-form/forgot-email-form.component";
 import {ForgotEmailSentComponent} from "./forgot-email-sent/forgot-email-sent.component";
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 const appRoutes: Routes = [
@@ -61,6 +62,10 @@ const appRoutes: Routes = [
       {
         path: 'partial-password',
         component: PartialPasswordComponent,
+      },
+      {
+        path: 'change-password',
+        component: ChangePasswordComponent,
       }
     ],
     component: ProtectedHomeComponent
@@ -81,7 +86,8 @@ const appRoutes: Routes = [
     CreateTransferComponent,
     TransferListComponent,
     PartialPasswordComponent,
-    ForgotEmailFormComponent
+    ForgotEmailFormComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

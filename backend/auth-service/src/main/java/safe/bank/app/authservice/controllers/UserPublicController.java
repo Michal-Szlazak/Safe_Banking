@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import safe.bank.app.authservice.controller_advice.exceptions.UserCreationException;
+import safe.bank.app.authservice.dtos.PasswordChangeDTO;
 import safe.bank.app.authservice.dtos.ResetPasswordDTO;
 import safe.bank.app.authservice.dtos.UserLoginDTO;
 import safe.bank.app.authservice.dtos.UserPostDTO;

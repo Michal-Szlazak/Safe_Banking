@@ -38,5 +38,4 @@ public class RealmResourceBuilder {
         return keycloak.realm(appRealm);
     }
 
-
 }

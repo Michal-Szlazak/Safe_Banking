@@ -68,6 +68,16 @@ public class PartialPasswordService {
         partialPasswordSetRepository.save(partialPasswordSet);
     }
 
+    public void createNewPartialPasswordSet(String newPassword, UUID userId) {
+
+        Optional<PartialPasswordSet> set = partialPasswordSetRepository.findById(userId);
+        if (set.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        partialPasswordSetRepository.delete(set.get());
+        createPartialPasswordSet(newPassword, userId);
+    }
+
     public void checkPartialPassword(PartialPasswordPostDTO partialPasswordPostDTO,
                                         UUID userId) {
 
