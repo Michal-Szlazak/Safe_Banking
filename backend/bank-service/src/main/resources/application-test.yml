@@ -1,0 +1,19 @@
+server:
+  port: 8083
+
+keycloak-client:
+  server-url: http://keycloak:8080
+  realm: SafeBankApp
+
+secrets:
+  encryption-key: "7d3480a02ebe5b24d46dc14c1805677d5f9615b6f57e48a39d7e8f8e6f4cc1a3"
+
+spring:
+
+  mvc:
+    log-request-details: true
+
+  datasource:
+    url: jdbc:postgresql://bank_db:5432/bankdb
+    username: sa
+    password: sa

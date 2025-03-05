@@ -1,0 +1,18 @@
+server:
+  port: 8083
+
+keycloak-client:
+  server-url: $SERVER_URL
+  realm: $KEYCLOAK_REALM
+
+encryption-key: $ENCRYPTION_KEY
+
+spring:
+
+  mvc:
+    log-request-details: true
+
+  datasource:
+    url: $DB_URL
+    username: $DB_USERNAME
+    password: $DB_PASSWORD

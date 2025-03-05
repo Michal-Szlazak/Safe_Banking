@@ -17,13 +17,11 @@ public class BankUserService {
 
     private final BankUserRepository bankUserRepository;
     private final BankUserMapper bankUserMapper;
-    private final EncryptionService encryptionService;
 
     public void createBankUser(PostBankUserDTO userDTO) {
 
-        BankUser plainBankUser = bankUserMapper.toEntity(userDTO);
-        BankUser encryptedBankUser = encryptionService.encryptBankUser(plainBankUser);
-        bankUserRepository.save(encryptedBankUser);
+        BankUser bankUser = bankUserMapper.toEntity(userDTO);
+        bankUserRepository.save(bankUser);
     }
 
     public BankUser getUser(UUID userId) {

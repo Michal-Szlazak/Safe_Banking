@@ -20,10 +20,8 @@ public class BankAccount implements Serializable {
     private UUID accountId;
     private String accountName;
     private String accountNumber;
-    private String cvv;
     private Instant expiresAt;
     private String balance;
-    private byte[] iv;
 
     @Version
     private Long version;

@@ -1,14 +1,18 @@
 package safe.bank.app.bankservice.configurations;
 
 import com.github.javafaker.Faker;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-@Component
+@Configuration
 public class Beans {
+
+    @Value("${secrets.encryption-key}")
+    private String key;
 
     @Bean
     public Faker faker() {
@@ -17,7 +21,7 @@ public class Beans {
 
     @Bean
     public SecretKey secretKey() {
-        byte[] keyBytes = hexStringToByteArray("7d3480a02ebe5b24d46dc14c1805677d5f9615b6f57e48a39d7e8f8e6f4cc1a3");
+        byte[] keyBytes = hexStringToByteArray(key);
         return new SecretKeySpec(keyBytes, "AES");
     }
 

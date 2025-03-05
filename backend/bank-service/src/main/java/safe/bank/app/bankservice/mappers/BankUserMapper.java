@@ -7,6 +7,5 @@ import safe.bank.app.bankservice.entities.BankUser;
 @Mapper
 public interface BankUserMapper {
 
-
     BankUser toEntity(PostBankUserDTO userDTO);
 }

@@ -21,10 +21,9 @@ public class FakerService {
     public GeneratedAccountDTO generatedAccountDTO() {
 
         String accountNumber = generateBankAccountNumber();
-        String cvv = generateCcvNumber();
         Instant expiresAt = getExpirationDate();
         BigDecimal balance = BigDecimal.valueOf(1000);
-        return new GeneratedAccountDTO(accountNumber, cvv, expiresAt, balance.toString());
+        return new GeneratedAccountDTO(accountNumber, expiresAt, balance.toString());
     }
     private String generateFakeBankAccountNumber() {
 
@@ -40,10 +39,6 @@ public class FakerService {
         } while (accounts.contains(accountNumber));
 
         return accountNumber;
-    }
-
-    private String generateCcvNumber() {
-        return faker.number().digits(3);
     }
 
     private Instant getExpirationDate() {

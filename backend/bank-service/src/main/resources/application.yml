@@ -1,16 +1,6 @@
 server:
-  port: 8083
   ssl:
     bundle: "bank-service"
-
-keycloak-client:
-  server-url: http://keycloak:8080
-  realm: SafeBankApp
-
-logging:
-  level:
-    org.springframework.web: ERROR
-    org.hibernate: ERROR
 
 spring:
   ssl:
@@ -31,21 +21,6 @@ spring:
           truststore:
             certificate: "classpath:bank-service.crt"
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: ${keycloak-client.server-url}/realms/${keycloak-client.realm}/protocol/openid-connect/certs
-          issuer-uri: ${keycloak-client.server-url}/realms/${keycloak-client.realm}
-
-  mvc:
-    log-request-details: true # for debugging
-
-  datasource:
-    url: jdbc:postgresql://bank_db:5432/bankdb
-    username: sa
-    password: sa
-
   sql:
     init:
       platform: postgres
@@ -61,3 +36,15 @@ spring:
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${keycloak-client.server-url}/realms/${keycloak-client.realm}/protocol/openid-connect/certs
+          issuer-uri: ${keycloak-client.server-url}/realms/${keycloak-client.realm}
+
+logging:
+  level:
+    org.springframework.web: ERROR
+    org.hibernate: ERROR

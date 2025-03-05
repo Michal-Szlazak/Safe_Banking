@@ -12,10 +12,8 @@ import safe.bank.app.bankservice.entities.BankUser;
 public interface BankAccountMapper {
 
     @Mapping(target = "accountName", source = "bankAccountCreateDto.accountName")
-    @Mapping(target = "cvv", source = "generatedAccountDTO.cvv")
     @Mapping(target = "accountNumber", source = "generatedAccountDTO.accountNumber")
     @Mapping(target = "expiresAt", source = "generatedAccountDTO.expiresAt")
-    @Mapping(target = "iv", source = "generatedAccountDTO.iv")
     @Mapping(target = "balance", constant = "1000")
     BankAccount toEntity(BankAccountCreateDto bankAccountCreateDto,
                          BankUser bankUser,

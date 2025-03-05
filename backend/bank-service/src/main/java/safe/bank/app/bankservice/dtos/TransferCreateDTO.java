@@ -38,5 +38,6 @@ public class TransferCreateDTO {
             message = "Wrong account number format."
     )
     String receiverAccount;
+    String cvv;
     BigDecimal amount;
 }
