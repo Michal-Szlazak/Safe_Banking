@@ -57,7 +57,8 @@ export class CreateTransferComponent {
       receiverAccount: ['', [Validators.required, Validators.minLength(28), Validators.maxLength(28), accountNumberValidator]],
       senderAccount: ['', [Validators.required, Validators.minLength(28), Validators.maxLength(28), accountNumberValidator]],
       title: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20), lettersAndSpaceValidator]],
-      amount: [0, [Validators.required, amountValidation]]
+      amount: [0, [Validators.required, amountValidation]],
+      cvv: ['']
     });
   }
 
@@ -65,14 +66,14 @@ export class CreateTransferComponent {
 
     if (this.bankTransferForm.valid) {
 
-      const dialogRef = this.dialog.open(PartialPasswordComponent, {
-        width: '500px',
-        disableClose: true,
-      });
+      // const dialogRef = this.dialog.open(PartialPasswordComponent, {
+      //   width: '500px',
+      //   disableClose: true,
+      // });
 
-      dialogRef.afterClosed().subscribe((result) => {
-
-        if (result === 200) {
+      // dialogRef.afterClosed().subscribe((result) => {
+// 
+        // if (result === 200) {
 
           const formValues = this.bankTransferForm.value;
           const jwtToken = this.tokenService.getToken();
@@ -93,11 +94,11 @@ export class CreateTransferComponent {
         } else {
           this.toastr.error('Failed to authenticate.', 'Unauthorized');
         }
-      });
+      // });
 
-    } else {
-      // Handle invalid form
-      console.log('Form is invalid. Please check the fields.');
-    }
+    // } else {
+    //   // Handle invalid form
+    //   console.log('Form is invalid. Please check the fields.');
+    // }
   }
 }

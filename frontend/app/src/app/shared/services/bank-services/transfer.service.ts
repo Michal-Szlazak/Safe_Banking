@@ -18,6 +18,7 @@ export interface TransferGet {
   receiverNumber: string;
   amount: number;
   timestamp: Date;
+  cvv: string;
 }
 
 @Injectable({

@@ -46,5 +46,5 @@ spring:
 
 logging:
   level:
-    org.springframework.web: ERROR
-    org.hibernate: ERROR
+    org.springframework.web: DEBUG
+    org.hibernate: DEBUG
