@@ -9,12 +9,6 @@ import safe.bank.app.bankservice.dtos.BankAccountCreateDto;
 import safe.bank.app.bankservice.dtos.BankAccountGetDTO;
 import safe.bank.app.bankservice.services.BankAccountService;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.UUID;
 

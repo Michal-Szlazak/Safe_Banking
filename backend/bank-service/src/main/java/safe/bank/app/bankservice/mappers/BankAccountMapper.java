@@ -19,5 +19,6 @@ public interface BankAccountMapper {
                          BankUser bankUser,
                          GeneratedAccountDTO generatedAccountDTO);
 
-    BankAccountGetDTO toBankAccountGetDTO(BankAccount bankAccount);
+    @Mapping(target = "cvv", source = "cvv")
+    BankAccountGetDTO toBankAccountGetDTO(BankAccount bankAccount, String cvv);
 }

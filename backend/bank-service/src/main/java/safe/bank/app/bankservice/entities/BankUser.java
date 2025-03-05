@@ -21,5 +21,4 @@ public class BankUser {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private byte[] iv;
 }

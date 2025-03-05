@@ -6,6 +6,7 @@ interface TransferData {
   receiverName: string,
   receiverAccount: string,
   senderAccount: string,
+  cvv: string,
   title: string,
   amount: number
 }

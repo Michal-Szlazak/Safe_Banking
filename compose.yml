@@ -17,14 +17,13 @@ services:
   keycloak:
       image: quay.io/keycloak/keycloak:latest
       environment:
-        KEYCLOAK_ADMIN: admin
-        KEYCLOAK_ADMIN_PASSWORD: admin
-        DB_VENDOR: POSTGRES
-        DB_ADDR: postgres
-        DB_DATABASE: auth-db
-        DB_SCHEMA: keycloak
-        DB_USER: postgres
-        DB_PASSWORD: postgres
+        - KEYCLOAK_ADMIN=admin  
+        - KEYCLOAK_ADMIN_PASSWORD=admin
+        - KC_DB=postgres
+        - KC_DB_URL_HOST=auth-db
+        - KC_DB_URL_DATABASE=auth-db
+        - KC_DB_USERNAME=postgres
+        - KC_DB_PASSWORD=postgres
       volumes:
       - ./backend/keycloak-config/realm-export.json:/opt/keycloak/data/import/realm.json
       depends_on:
@@ -45,6 +44,8 @@ services:
     networks:
       - net-bankdb
       - net-backend
+    environment:
+      - "SPRING_PROFILES_ACTIVE=test"
 
   auth-service:
     <<: *service
