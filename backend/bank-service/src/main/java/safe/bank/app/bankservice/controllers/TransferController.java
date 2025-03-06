@@ -2,6 +2,7 @@ package safe.bank.app.bankservice.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import safe.bank.app.bankservice.dtos.TransferGetDTO;
@@ -18,6 +19,7 @@ public class TransferController {
 
     private final TransferService transferService;
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void sendTransaction(@RequestBody @Valid TransferCreateDTO transactionCreateDTO,
                                 JwtAuthenticationToken token) {
         String userId = token.getName();
@@ -25,6 +27,7 @@ public class TransferController {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<TransferGetDTO> getTransfers(JwtAuthenticationToken token) {
         String userId = token.getName();
         return transferService.getTransfers(UUID.fromString(userId));
